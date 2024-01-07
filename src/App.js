@@ -1,23 +1,20 @@
-import './App.css';
+import { useState } from "react";
+import "./App.css";
+import Login from "./Components/Login";
+import useLocalStorage from "./Hooks/useLocalStorage";
+import Dashboard from "./Components/Dashboard";
+import ContactsProvider from "./Contexts/ContactsProvider";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  const [ID, setID] = useLocalStorage("id");
+
+  const dashboard = (
+    <ContactsProvider>
+      <Dashboard id={ID} />
+    </ContactsProvider>
   );
+  
+  return ID ? dashboard : <Login onSubmitID={setID} />;
 }
 
 export default App;
