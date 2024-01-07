@@ -1,13 +1,16 @@
-    import React from 'react'
-import SideBar from './SideBar'
-    
-    const Dashboard = ({id}) => {
-      return (
-        <div style={{height:'100vh'}} className="d-flex">
+import React from "react";
+import SideBar from "./SideBar";
+import OpenConversation from "./OpenConversation";
+import { useConversations } from "../Contexts/ConversationsProvider";
 
-            <SideBar id={id}/>
-        </div>
-      )
-    }
-    
-    export default Dashboard
+const Dashboard = ({ id }) => {
+  const { selectedConversation } = useConversations();
+  return (
+    <div style={{ height: "100vh" }} className="d-flex">
+      <SideBar id={id} />
+      {selectedConversation && <OpenConversation />}
+    </div>
+  );
+};
+
+export default Dashboard;

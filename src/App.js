@@ -10,7 +10,7 @@ function App() {
   const [ID, setID] = useLocalStorage("id");
   const dashboard = (
     <ContactsProvider>
-      <ConversationsProvider>
+      <ConversationsProvider id={ID}>
         <Dashboard id={ID} />
       </ConversationsProvider>
     </ContactsProvider>
