@@ -11,7 +11,7 @@ const ContactsProvider = ({ children }) => {
     <ContactsContext.Provider value={{ contacts, createContact }}>
       {children}
     </ContactsContext.Provider>
-  );
+  ); 
 };
 
 export const useContacts = () => useContext(ContactsContext);
