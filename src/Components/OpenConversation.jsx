@@ -6,7 +6,6 @@ const OpenConversation = () => {
   const { sendMessage, selectedConversation } = useConversations();
   const [text, setText] = useState("");
   const setRef = useCallback((node) => {
-    console.log(node);
     node && node.scrollIntoView({ smooth: true });
   }, []);
 
@@ -30,7 +29,7 @@ const OpenConversation = () => {
                 key={index}
                 ref={lastMessage ? setRef : null}
                 className={`my-1 d-flex flex-column ${
-                  message.fromMe ? "align-self-end" : ""
+                  message.fromMe ? "align-self-end align-items-end" : "align-items-start"
                 }`}
               >
                 <div
