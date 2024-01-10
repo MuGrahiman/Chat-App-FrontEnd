@@ -7,14 +7,17 @@ const SocketProvider = ({ id, children }) => {
 
   useEffect(() => {
     const newSocket = io("http://localhost:5000", { query: { id } });
+    console.log(id)
     newSocket.on("connect", () => {
+      console.log(`socket connected successflly:${newSocket.id}`)
       setSocket(newSocket);
-      setLoading(false);
+      setLoading(false); 
     });
     return()=> newSocket.close()
   }, [id]);
 
   useEffect(()=>console.log(socket),[socket])
+  
   if (loading) return <div>Loading...</div>;
   
   

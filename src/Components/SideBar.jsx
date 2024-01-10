@@ -32,7 +32,7 @@ const SideBar = ({ id }) => {
           </Tab.Pane>
         </Tab.Content>
         <div className="p-2 border small">
-          Your Id: <span className="text-muted">{id}</span>
+          Your Id: <span className="text-muted">'{id}'</span>
         </div>
         <Button className="rounded-0" onClick={()=>setModalOpen(true)}>
           New {conversationOpen ? "Conversation" : "Contact"}

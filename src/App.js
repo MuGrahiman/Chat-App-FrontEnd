@@ -6,7 +6,7 @@ import Dashboard from "./Components/Dashboard";
 import ContactsProvider from "./Contexts/ContactsProvider";
 import ConversationsProvider from "./Contexts/ConversationsProvider";
 import SocketProvider from "./Contexts/SocketProvider";
-
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 function App() {
   const [ID, setID] = useLocalStorage("id");
   const dashboard = (
@@ -19,7 +19,17 @@ function App() {
     </SocketProvider>
   );
 
-  return ID ? dashboard : <Login onSubmitID={setID} />;
+  // return ID ? dashboard : <Login onSubmitID={setID} />;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Navigate to={'/home'}/>} />
+        <Route path="/login" element={<Login />} />
+        {/* <Route path="/register" element={<R/>}/> */}
+        <Route path="/home" element={<Dashboard />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;

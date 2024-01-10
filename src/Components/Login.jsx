@@ -1,20 +1,32 @@
 import React, { useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { Button, Container, Form } from "react-bootstrap";
-
+import axios from "axios";
 const Login = ({ onSubmitID }) => {
   const idRef = useRef();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    postData()
     onSubmitID(idRef.current.value);
   };
 
-  const createNewId = () => {
-
-    onSubmitID(uuidv4());
+  const createNewId = async() => {
+    const newId = uuidv4()
+   await postData('sign-up',newId)
+    onSubmitID(newId);
   };
 
+  const postData = async (URL, Data) => {
+    try { 
+    await  axios
+        .post(`http://localhost:5000/${URL}`, Data)
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+    } catch (error) {
+      console.log(error)
+    }
+  };
   return (
     <Container
       className="d-flex align-items-center"
