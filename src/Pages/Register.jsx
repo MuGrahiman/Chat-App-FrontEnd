@@ -1,7 +1,10 @@
 import { useRef, useState } from "react";
 import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
-
+import { useDispatch, useSelector } from "react-redux";
+import { registerUser } from "../Store";
 export default function Register() {
+  const dispatch = useDispatch();
+  const status = useSelector((state) => state.auth.status);
   const [formData, setFormData] = useState({
     username: "",
     firstname: "",
@@ -32,14 +35,16 @@ export default function Register() {
       !password.trim() ||
       !cpassword.trim()
     )
-      alert("invalid credentials . please enter values");
+      return alert("invalid credentials . please enter values");
 
     if (phoneno.trim().toString().length !== 10)
-      alert("invalid phone no.please enter valid no");
-    if (password.trim().length<8) alert("password minimum length must be 8");
-    if (password.trim() !== cpassword.trim()) alert("password need to match");
-    console.log(password.trim().length);
-    console.log(formData);
+      return alert("invalid phone no.please enter valid no");
+    if (password.trim().length < 8)
+      return alert("password minimum length must be 8");
+    if (password.trim() !== cpassword.trim())
+      return alert("password need to match");
+
+    dispatch(registerUser(formData));
   };
   return (
     <div>
@@ -199,7 +204,11 @@ export default function Register() {
                         </p>
                       </Form.Group>
                       <div className="d-grid">
-                        <Button variant="primary" type="submit">
+                        <Button
+                          variant="primary"
+                          disabled={status === "pending"}
+                          type="submit"
+                        >
                           Register
                         </Button>
                       </div>
