@@ -1,15 +1,64 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import * as Api from "./API";
+import { addUser } from "..";
 
-export const registerUser = createAsyncThunk(
+export const userRegister = createAsyncThunk(
   "auth/register",
-  async (authData) => {
-    const response = await Api.registerUser(authData);
-    console.log(response);
+  async (authData, thunApi) => {
+    console.log("response");
+    console.log(authData);
+
+    try {
+      const response = await Api.userRegister(authData);
+      return response.data;
+    } catch (error) {
+      return thunApi.rejectWithValue(
+        error?.response?.data?.message ||
+          error?.response?.message ||
+          error?.message ||
+          "something went wrong"
+      );
+    }
   }
 );
 
-export const loginUser = createAsyncThunk("auth/login", async (authData) => {
-  const response = await Api.loginUser(authData);
-  console.log(response);
+export const userResendOtp = createAsyncThunk("auth/resend", async (id) => {
+  const response = await Api.userResendOtp(id);
+  return response.data;
 });
+
+export const userPostOTP = createAsyncThunk(
+  "auth/otp",
+  async (authData, thunkApi) => {
+    try {
+      const response = await Api.userPostOTP(authData);
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(
+        error?.response?.data?.message ||
+          error?.response?.message ||
+          error?.message ||
+          "something went wrong"
+      );
+    }
+  }
+);
+
+export const userLogin = createAsyncThunk(
+  "auth/login",
+  async (authData, thunkApi) => {
+    try {
+      const response = await Api.userLogin(authData);
+      console.log(response);
+      thunkApi.dispatch(addUser(response.data));
+    } catch (error) {
+      return thunkApi.rejectWithValue(
+        error?.response?.data?.message ||
+          error?.response?.message ||
+          error?.message ||
+          "something went wrong"
+      );
+    }
+  }
+);

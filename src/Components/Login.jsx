@@ -1,33 +1,47 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { userLogin } from "../Store";
+import useLocalStorage from "../Hooks/useLocalStorage";
 
 export default function Login({ onSubmitID }) {
-  
-  const idRef = useRef();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { status, authData } = useSelector((state) => state.auth);
+  const user = useSelector((state) => state.user.currentUser);
+  const [_, setValue] = useLocalStorage("USER");
+  const [userData, setUserData] = useState({
+    email: "",
+    password: "",
+  });
+  useEffect(() => {
+    if (user !== null && Object.keys(user).length > 0) {
+      navigate("/home");
+      setValue(user);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (
+      user !== null &&
+      typeof user === "object" &&
+      Object.keys(user).length > 0
+    ) {
+      setValue(user);
+      navigate("/home");
+    }
+  }, [user]);
   const handleSubmit = (e) => {
     e.preventDefault();
-    postData()
-    // onSubmitID(idRef.current.value);
+    const { email, password } = userData;
+    if (!email || !password)
+      alert("invalid credentials. please enter valid data");
+    dispatch(userLogin({ email, password }));
   };
 
-  const createNewId = async() => {
-    const newId = uuidv4()
-   await postData('sign-up',newId)
-    // onSubmitID(newId);
-  };
-
-  const postData = async (URL, Data) => {
-    try { 
-    await  axios
-        .post(`http://localhost:5000/${URL}`, Data)
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
-    } catch (error) {
-      console.log(error)
-    }
-  };
   return (
     <div>
       <Container>
@@ -40,12 +54,22 @@ export default function Login({ onSubmitID }) {
                   <h2 className="fw-bold mb-2 text-uppercase ">Brand</h2>
                   <p className=" mb-5">Please enter your login and password!</p>
                   <div className="mb-3">
-                    <Form onSubmit={handleSubmit} ref={idRef} >
+                    <Form onSubmit={handleSubmit}>
                       <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label className="text-center">
                           Email address
                         </Form.Label>
-                        <Form.Control type="email" placeholder="Enter email" />
+                        <Form.Control
+                          type="email"
+                          value={userData.email}
+                          onChange={(e) =>
+                            setUserData((prev) => ({
+                              ...prev,
+                              email: e.target.value,
+                            }))
+                          }
+                          placeholder="Enter email"
+                        />
                       </Form.Group>
 
                       <Form.Group
@@ -53,7 +77,17 @@ export default function Login({ onSubmitID }) {
                         controlId="formBasicPassword"
                       >
                         <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="Password" />
+                        <Form.Control
+                          type="password"
+                          value={userData.password}
+                          onChange={(e) =>
+                            setUserData((prev) => ({
+                              ...prev,
+                              password: e.target.value,
+                            }))
+                          }
+                          placeholder="Password"
+                        />
                       </Form.Group>
                       <Form.Group
                         className="mb-3"

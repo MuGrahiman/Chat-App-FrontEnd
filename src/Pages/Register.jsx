@@ -1,61 +1,98 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { registerUser } from "../Store";
+import { useNavigate } from "react-router-dom";
+import { userRegister } from "../Store";
 export default function Register() {
+  const { status, error, user } = useSelector((state) => state.auth);
+  console.log(status, error, user);
   const dispatch = useDispatch();
-  const status = useSelector((state) => state.auth.status);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (status === "succeeded") navigate("/otp");
+  }, [status]);
+
   const [formData, setFormData] = useState({
-    username: "",
-    firstname: "",
-    lastname: "",
-    phoneno: null,
-    email: "",
+    userName: "",
+    firstName: "",
+    lastName: "",
+    phoneNo: null,
+    emailId: "",
     password: "",
     cpassword: "",
   });
   const idRef = useRef();
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("handlesubmit");
     const {
-      username,
-      firstname,
-      lastname,
-      phoneno,
-      email,
+      userName,
+      firstName,
+      lastName,
+      phoneNo,
+      emailId,
       password,
       cpassword,
     } = formData;
     if (
-      !username.trim() ||
-      !firstname.trim() ||
-      !lastname.trim() ||
-      !phoneno.trim() ||
-      !email.trim() ||
+      !userName.trim() ||
+      !firstName.trim() ||
+      !lastName.trim() ||
+      !phoneNo.trim() ||
+      !emailId.trim() ||
       !password.trim() ||
       !cpassword.trim()
     )
       return alert("invalid credentials . please enter values");
 
-    if (phoneno.trim().toString().length !== 10)
+    if (phoneNo.trim().toString().length !== 10)
       return alert("invalid phone no.please enter valid no");
     if (password.trim().length < 8)
       return alert("password minimum length must be 8");
     if (password.trim() !== cpassword.trim())
       return alert("password need to match");
 
-    dispatch(registerUser(formData));
+    console.log("handlesubmit success");
+
+    dispatch(userRegister(formData));
   };
+  let content;
+  if (status === "pending")
+    content = (
+      <span className="bg-warning">
+        <h1>...</h1>
+      </span>
+    );
+  if (status === "failed") content = <span className="bg-danger">{error}</span>;
+  if (status === "succeeded")
+    content = <span className="bg-success">{user}</span>;
+
   return (
     <div>
       <Container>
         <Row className="vh-100 d-flex justify-content-center align-items-center">
           <Col md={8} lg={6} xs={12}>
             <div className="border border-3 border-primary"></div>
+            {content}
             <Card className="shadow">
               <Card.Body>
                 <div className="mb-3 mt-md-4">
-                  <h2 className="fw-bold mb-2 text-uppercase ">Brand</h2>
+                  <h2 className="fw-bold mb-2 text-uppercase ">
+                    Brand<br></br>
+                    <small
+                      className={`${
+                        status === "pending"
+                          ? "bg-warning"
+                          : status === "succeeded"
+                          ? "bg-success"
+                          : status === "failed"
+                          ? "bg-danger"
+                          : "bg-light"
+                      } text-white`}
+                    >
+                      Status:{status}
+                    </small>
+                  </h2>
                   <p className=" mb-5">Please enter your login and password!</p>
                   <div className="mb-3">
                     <Form onSubmit={handleSubmit} ref={idRef}>
@@ -65,16 +102,16 @@ export default function Register() {
                         </Form.Label>
                         <Form.Control
                           type="text"
-                          name="username"
+                          name="userName"
                           placeholder="Enter User Name"
                           min={5}
                           max={8}
                           required
-                          value={formData.username}
+                          value={formData.userName}
                           onChange={(e) =>
                             setFormData((pre) => ({
                               ...pre,
-                              username: e.target.value,
+                              userName: e.target.value,
                             }))
                           }
                         />
@@ -86,14 +123,14 @@ export default function Register() {
                         </Form.Label>
                         <Form.Control
                           type="text"
-                          name="firstname"
+                          name="firstName"
                           placeholder="Enter First Name"
                           required
-                          value={formData.firstname}
+                          value={formData.firstName}
                           onChange={(e) =>
                             setFormData((pre) => ({
                               ...pre,
-                              firstname: e.target.value,
+                              firstName: e.target.value,
                             }))
                           }
                         />
@@ -104,14 +141,14 @@ export default function Register() {
                         </Form.Label>
                         <Form.Control
                           type="text"
-                          name="lastname"
+                          name="lastName"
                           placeholder="Enter Last Name"
                           required
-                          value={formData.lastname}
+                          value={formData.lastName}
                           onChange={(e) =>
                             setFormData((pre) => ({
                               ...pre,
-                              lastname: e.target.value,
+                              lastName: e.target.value,
                             }))
                           }
                         />
@@ -122,15 +159,15 @@ export default function Register() {
                         </Form.Label>
                         <Form.Control
                           type="number"
-                          name="phoneno"
+                          name="phoneNo"
                           placeholder="Enter Phone Number"
                           required
                           min={10}
-                          value={formData.phoneno}
+                          value={formData.phoneNo}
                           onChange={(e) =>
                             setFormData((pre) => ({
                               ...pre,
-                              phoneno: e.target.value,
+                              phoneNo: e.target.value,
                             }))
                           }
                         />
@@ -140,15 +177,15 @@ export default function Register() {
                           Email address
                         </Form.Label>
                         <Form.Control
-                          type="email"
-                          name="email"
-                          placeholder="Enter email"
+                          type="emailId"
+                          name="emailId"
+                          placeholder="Enter emailId"
                           required
-                          value={formData.email}
+                          value={formData.emailId}
                           onChange={(e) =>
                             setFormData((pre) => ({
                               ...pre,
-                              email: e.target.value,
+                              emailId: e.target.value,
                             }))
                           }
                         />
