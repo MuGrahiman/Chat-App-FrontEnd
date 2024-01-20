@@ -1,13 +1,13 @@
-import React from "react";
-import { ListGroup } from "react-bootstrap";
-import { useConversations } from "../Contexts/ConversationsProvider";
+import React from 'react';
+import { ListGroup } from 'react-bootstrap';
+// import { useConversations } from "../Contexts/ConversationsProvider";
 
 const Conversations = () => {
-  const { conversations,selectConversationIndex } = useConversations();
-  console.log(conversations);
-  return (
-    <ListGroup variant="flush">
-      {conversations.map((conversations, index) => (
+	// const { conversations,selectConversationIndex } = useConversations();
+	// console.log(conversations);
+	return (
+		<ListGroup variant='flush'>
+			{/* {conversations.map((conversations, index) => (
         <ListGroup.Item
           key={index}
           action
@@ -16,9 +16,9 @@ const Conversations = () => {
         >
           {conversations.recipients.map((r) => r.name).join(", ")}
         </ListGroup.Item>
-      ))}
-    </ListGroup>
-  );
+      ))} */}
+		</ListGroup>
+	);
 };
 
 export default Conversations;

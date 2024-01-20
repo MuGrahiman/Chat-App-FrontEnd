@@ -1,64 +1,64 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import * as Api from "./API";
-import { addUser } from "..";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import * as Api from './API';
+import { addUser } from '..';
 
 export const userRegister = createAsyncThunk(
-  "auth/register",
-  async (authData, thunApi) => {
-    console.log("response");
-    console.log(authData);
+	'auth/register',
+	async (authData, thunkApi) => {
+		console.log('response');
+		console.log(authData);
 
-    try {
-      const response = await Api.userRegister(authData);
-      return response.data;
-    } catch (error) {
-      return thunApi.rejectWithValue(
-        error?.response?.data?.message ||
-          error?.response?.message ||
-          error?.message ||
-          "something went wrong"
-      );
-    }
-  }
+		try {
+			const response = await Api.userRegister(authData);
+			return response.data;
+		} catch (error) {
+			return thunkApi.rejectWithValue(
+				error?.response?.data?.message ||
+					error?.response?.message ||
+					error?.message ||
+					'something went wrong'
+			);
+		}
+	}
 );
 
-export const userResendOtp = createAsyncThunk("auth/resend", async (id) => {
-  const response = await Api.userResendOtp(id);
-  return response.data;
+export const userResendOtp = createAsyncThunk('auth/resend', async (id) => {
+	const response = await Api.userResendOtp(id);
+	return response.data;
 });
 
 export const userPostOTP = createAsyncThunk(
-  "auth/otp",
-  async (authData, thunkApi) => {
-    try {
-      const response = await Api.userPostOTP(authData);
-      console.log(response);
-      return response.data;
-    } catch (error) {
-      return thunkApi.rejectWithValue(
-        error?.response?.data?.message ||
-          error?.response?.message ||
-          error?.message ||
-          "something went wrong"
-      );
-    }
-  }
+	'auth/otp',
+	async (authData, thunkApi) => {
+		try {
+			const response = await Api.userPostOTP(authData);
+			console.log(response);
+			return response.data;
+		} catch (error) {
+			return thunkApi.rejectWithValue(
+				error?.response?.data?.message ||
+					error?.response?.message ||
+					error?.message ||
+					'something went wrong'
+			);
+		}
+	}
 );
 
 export const userLogin = createAsyncThunk(
-  "auth/login",
-  async (authData, thunkApi) => {
-    try {
-      const response = await Api.userLogin(authData);
-      console.log(response);
-      thunkApi.dispatch(addUser(response.data));
-    } catch (error) {
-      return thunkApi.rejectWithValue(
-        error?.response?.data?.message ||
-          error?.response?.message ||
-          error?.message ||
-          "something went wrong"
-      );
-    }
-  }
+	'auth/login',
+	async (authData, thunkApi) => {
+		try {
+			const response = await Api.userLogin(authData);
+			console.log(response);
+			thunkApi.dispatch(addUser(response.data));
+		} catch (error) {
+			return thunkApi.rejectWithValue(
+				error?.response?.data?.message ||
+					error?.response?.message ||
+					error?.message ||
+					'something went wrong'
+			);
+		}
+	}
 );
