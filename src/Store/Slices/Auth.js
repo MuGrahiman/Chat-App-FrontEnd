@@ -13,6 +13,10 @@ const AuthSlice = createSlice({
 	initialState,
 	reducers: {
 		addUser: (state, action) => {
+			localStorage.setItem(
+				"CHAT-APP-CLONE-USER",
+				JSON.stringify(action.payload)
+			);
 			state.currentUser = action.payload;
 		},
 

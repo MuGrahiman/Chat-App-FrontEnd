@@ -51,10 +51,7 @@ export const userLogin = createAsyncThunk(
 		try {
 			const response = await Api.userLogin(authData);
 			console.log(response);
-			localStorage.setItem(
-				"CHAT-APP-CLONE-USER",
-				JSON.stringify(response.data)
-			);
+		
 			return thunkApi.dispatch(addUser(response.data));
 		} catch (error) {
 			return thunkApi.rejectWithValue(

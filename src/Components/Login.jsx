@@ -1,11 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { Col, Button, Row, Container, Card, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { userLogin } from '../Store';
-import useLocalStorage from '../Hooks/useLocalStorage';
 
 export default function Login({ onSubmitID }) {
 	const dispatch = useDispatch();
