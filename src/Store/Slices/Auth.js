@@ -1,12 +1,15 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
+
+const jsonValue = localStorage.getItem("CHAT-APP-CLONE-USER");
+
 const initialState = {
 	loading: false,
 	error: null,
-	currentUser: null,
+	currentUser: jsonValue ? JSON.parse(jsonValue) : null,
 };
 
 const AuthSlice = createSlice({
-	name: 'user',
+	name: "user",
 	initialState,
 	reducers: {
 		addUser: (state, action) => {

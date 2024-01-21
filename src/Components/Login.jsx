@@ -3,26 +3,18 @@ import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import { Col, Button, Row, Container, Card, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { userLogin } from '../Store';
 import useLocalStorage from '../Hooks/useLocalStorage';
 
 export default function Login({ onSubmitID }) {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const { status, authData } = useSelector((state) => state.auth);
 	const user = useSelector((state) => state.user.currentUser);
-	const [_, setValue] = useLocalStorage('USER');
 	const [userData, setUserData] = useState({
 		email: '',
 		password: '',
 	});
-	useEffect(() => {
-		if (user !== null && Object.keys(user).length > 0) {
-			navigate('/home');
-			setValue(user);
-		}
-	}, [user]);
 
 	useEffect(() => {
 		if (
@@ -30,10 +22,10 @@ export default function Login({ onSubmitID }) {
 			typeof user === 'object' &&
 			Object.keys(user).length > 0
 		) {
-			setValue(user);
 			navigate('/home');
 		}
 	}, [user]);
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		const { email, password } = userData;
@@ -115,11 +107,11 @@ export default function Login({ onSubmitID }) {
 										<div className='mt-3'>
 											<p className='mb-0  text-center'>
 												Don't have an account?{' '}
-												<a
-													href="{''}"
+												<Link
+													to={'/register'}
 													className='text-primary fw-bold'>
 													Sign Up
-												</a>
+												</Link>
 											</p>
 										</div>
 									</div>
