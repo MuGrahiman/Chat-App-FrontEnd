@@ -1,25 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { Col, Button, Row, Container, Card, Form } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
-import { userLogin } from '../Store';
+import React, { useEffect, useState } from "react";
+import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { userLogin } from "../Store";
 
 export default function Login({ onSubmitID }) {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const user = useSelector((state) => state.user.currentUser);
 	const [userData, setUserData] = useState({
-		email: '',
-		password: '',
+		email: "",
+		password: "",
 	});
 
 	useEffect(() => {
+	
 		if (
 			user !== null &&
-			typeof user === 'object' &&
+			typeof user === "object" &&
 			Object.keys(user).length > 0
 		) {
-			navigate('/home');
+			navigate("/home");
 		}
 	}, [user]);
 
@@ -27,34 +28,34 @@ export default function Login({ onSubmitID }) {
 		e.preventDefault();
 		const { email, password } = userData;
 		if (!email || !password)
-			alert('invalid credentials. please enter valid data');
+			alert("invalid credentials. please enter valid data");
 		dispatch(userLogin({ email, password }));
 	};
 
 	return (
 		<div>
 			<Container>
-				<Row className='vh-100 d-flex justify-content-center align-items-center'>
+				<Row className="vh-100 d-flex justify-content-center align-items-center">
 					<Col
 						md={8}
 						lg={6}
 						xs={12}>
-						<div className='border border-3 border-primary'></div>
-						<Card className='shadow'>
+						<div className="border border-3 border-primary"></div>
+						<Card className="shadow">
 							<Card.Body>
-								<div className='mb-3 mt-md-4'>
-									<h2 className='fw-bold mb-2 text-uppercase '>Brand</h2>
-									<p className=' mb-5'>Please enter your login and password!</p>
-									<div className='mb-3'>
+								<div className="mb-3 mt-md-4">
+									<h2 className="fw-bold mb-2 text-uppercase ">Brand</h2>
+									<p className=" mb-5">Please enter your login and password!</p>
+									<div className="mb-3">
 										<Form onSubmit={handleSubmit}>
 											<Form.Group
-												className='mb-3'
-												controlId='formBasicEmail'>
-												<Form.Label className='text-center'>
+												className="mb-3"
+												controlId="formBasicEmail">
+												<Form.Label className="text-center">
 													Email address
 												</Form.Label>
 												<Form.Control
-													type='email'
+													type="email"
 													value={userData.email}
 													onChange={(e) =>
 														setUserData((prev) => ({
@@ -62,16 +63,16 @@ export default function Login({ onSubmitID }) {
 															email: e.target.value,
 														}))
 													}
-													placeholder='Enter email'
+													placeholder="Enter email"
 												/>
 											</Form.Group>
 
 											<Form.Group
-												className='mb-3'
-												controlId='formBasicPassword'>
+												className="mb-3"
+												controlId="formBasicPassword">
 												<Form.Label>Password</Form.Label>
 												<Form.Control
-													type='password'
+													type="password"
 													value={userData.password}
 													onChange={(e) =>
 														setUserData((prev) => ({
@@ -79,34 +80,34 @@ export default function Login({ onSubmitID }) {
 															password: e.target.value,
 														}))
 													}
-													placeholder='Password'
+													placeholder="Password"
 												/>
 											</Form.Group>
 											<Form.Group
-												className='mb-3'
-												controlId='formBasicCheckbox'>
-												<p className='small'>
+												className="mb-3"
+												controlId="formBasicCheckbox">
+												<p className="small">
 													<a
-														className='text-primary'
-														href='#!'>
+														className="text-primary"
+														href="#!">
 														Forgot password?
 													</a>
 												</p>
 											</Form.Group>
-											<div className='d-grid'>
+											<div className="d-grid">
 												<Button
-													variant='primary'
-													type='submit'>
+													variant="primary"
+													type="submit">
 													Login
 												</Button>
 											</div>
 										</Form>
-										<div className='mt-3'>
-											<p className='mb-0  text-center'>
-												Don't have an account?{' '}
+										<div className="mt-3">
+											<p className="mb-0  text-center">
+												Don't have an account?{" "}
 												<Link
-													to={'/register'}
-													className='text-primary fw-bold'>
+													to={"/register"}
+													className="text-primary fw-bold">
 													Sign Up
 												</Link>
 											</p>

@@ -21,6 +21,7 @@ const AuthSlice = createSlice({
 		},
 
 		removeUser: (state, action) => {
+			localStorage.removeItem("CHAT-APP-CLONE-USER");
 			state.currentUser = null;
 		},
 	},
