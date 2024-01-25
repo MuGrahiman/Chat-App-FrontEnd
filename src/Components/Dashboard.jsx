@@ -1,18 +1,24 @@
-import React from 'react';
-import SideBar from './SideBar';
-import OpenConversation from './OpenConversation';
-import { useConversations } from '../Contexts/ConversationsProvider';
+import React, { useEffect } from "react";
+import SideBar from "./SideBar";
+import OpenConversation from "./OpenConversation";
+import { useConversations } from "../Contexts/ConversationsProvider";
+import Chat from "../Pages/Chat";
+import Blog from "./Blog";
 
+import { useDispatch } from "react-redux";
+import { getAllUser, getAllUserContacts } from "../Store";
 const Dashboard = ({ id }) => {
-	// const { selectedConversation } = useConversations();
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(getAllUser());
+		dispatch(getAllUserContacts());
+	}, []);
 	return (
 		<div
-			style={{ height: '100vh' }}
-			className='d-flex'>
-			<SideBar id={id} />
-			{/* {selectedConversation &&
-       } */}
-			<OpenConversation />
+			style={{ height: "100vh" }}
+			className="d-flex">
+			<Chat />
+			<Blog /> 
 		</div>
 	);
 };

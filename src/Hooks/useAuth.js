@@ -1,9 +1,11 @@
-import  { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeUser } from "../Store";
+import { useNavigate } from "react-router-dom";
 
 const useAuth = () => {
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	const user = useSelector((state) => state.user.currentUser);
 
 	const isUserAuthenticated = useCallback(
@@ -23,7 +25,13 @@ const useAuth = () => {
 		);
 	}, [isUserAuthenticated]);
 
-	return [() => isAuthenticated, () => dispatch(removeUser())];
+	return [
+		() => isAuthenticated,
+		() => {
+			dispatch(removeUser());
+			navigate("/login");
+		},
+	];
 };
 
 export default useAuth;

@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { userRegister } from '../Store';
 export default function Register() {
 	const { status, error, user } = useSelector((state) => state.auth);
-	console.log(status, error, user);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	useEffect(() => {

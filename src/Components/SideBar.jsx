@@ -5,10 +5,12 @@ import Contacts from "./Contacts";
 import NewContactModal from "./NewContactModal";
 import NewConversationModal from "./NewConversationModal";
 import useAuth from "../Hooks/useAuth";
+import { useSelector } from "react-redux";
 
-const SideBar = ({ id }) => {
+const SideBar = ({ setModal }) => {
 	const CONVERSATIONS_KEY = "conversations";
 	const CONTACTS_KEY = "contacts";
+	const user = useSelector((state) => state.user.currentUser);
 	const [_, removeAuthentication] = useAuth();
 	const [modalOpen, setModalOpen] = useState(false);
 	const [activeKey, setActiveKey] = useState(CONVERSATIONS_KEY);
@@ -16,7 +18,7 @@ const SideBar = ({ id }) => {
 	const closeModal = () => setModalOpen(false);
 	return (
 		<div
-			className="d-flex flex-column"
+			className="d-flex flex-column h-100"
 			style={{ width: "250px" }}>
 			<Tab.Container
 				activeKey={activeKey}
@@ -25,7 +27,7 @@ const SideBar = ({ id }) => {
 					variant="tabs"
 					className="justify-content-center">
 					<Nav.Item>
-						<Nav.Link eventKey={CONVERSATIONS_KEY}> Conversation</Nav.Link>
+						<Nav.Link eventKey={CONVERSATIONS_KEY}> Chat</Nav.Link>
 					</Nav.Item>
 					<Nav.Item>
 						<Nav.Link eventKey={CONTACTS_KEY}> Contacts</Nav.Link>
@@ -33,14 +35,14 @@ const SideBar = ({ id }) => {
 				</Nav>
 				<Tab.Content className="border-end overflow-auto flex-grow-1">
 					<Tab.Pane eventKey={CONVERSATIONS_KEY}>
-						<Conversations />
+						<Conversations setModal={setModal}/>
 					</Tab.Pane>
 					<Tab.Pane eventKey={CONTACTS_KEY}>
 						<Contacts />
 					</Tab.Pane>
 				</Tab.Content>
 				<div className="p-2 border small">
-					Your Id: <span className="text-muted">'{id}'</span>
+					Your Id: <span className="text-muted">'{user.id}'</span>
 				</div>
 				<Button
 					className="rounded-0"
