@@ -17,5 +17,6 @@ export const userResendOtp = (id) => API.get(`/otp/${id}`);
 export const userLogin = (data) => API.post("user/Login", data);
 export const getAllUser = () => API.get("user/get");
 export const getAllUserContacts = () => API.get("contact");
-export const toggleFollowStatus = (id) => API.patch(`/contact`,id);
-export const createChat = (data) => API.post("chat/create", data);
+export const toggleFollowStatus = (id) => API.patch(`contact`,id);
+export const getAllUserChats = (id) => API.get(`chat/${id}`);
+export const postChat = ({chatId,text}) => API.post(`chat/${chatId}`, {text});

@@ -1,31 +1,31 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import * as Api from "./API";
 
-export const getAllUserContacts = createAsyncThunk(
-	"contact/chatList",
-	async (authData, thunkApi) => {
+export const getAllUserChats = createAsyncThunk(
+	"chat/get",
+	async (id, thunkApi) => {
 		console.log("response");
-		console.log(authData);
+		console.log(id);
 
 		try {
-			const response = await Api.getAllUserContacts(authData);
+			const response = await Api.getAllUserChats(id);
 			return response.data;
 		} catch (error) {
 			return thunkApi.rejectWithValue(
 				error?.response?.data?.message ||
 					error?.response?.message ||
 					error?.message ||
-					"something went wrong" 
+					"something went wrong"
 			);
-		} 
+		}
 	}
 );
 
-export const toggleFollowStatus = createAsyncThunk(
-	"contact/toggleFollow",
-	async (id, thunkApi) => {
-		const response = await Api.toggleFollowStatus({ id });
-		thunkApi.dispatch(getAllUserContacts());
+export const postChat = createAsyncThunk(
+	"chat/post",
+	async ({ chatId, text }, thunkApi) => {
+		const response = await Api.postChat({ chatId, text });
+		thunkApi.dispatch(getAllUserChats(chatId));
 		return response.data;
 	}
 );

@@ -6,7 +6,7 @@ import {
 
 const initialState = {
 	status: "idle", // loading: 'idle' | 'pending' | 'succeeded' | 'failed'
-	contacts: null,
+	chats: null,
 	followings: null,
 	followers: null,
 	error: null,
@@ -20,7 +20,7 @@ const ContactReducer = createReducer(initialState, (builder) => {
 		})
 		.addCase(getAllUserContacts.fulfilled, (state, action) => {
 			const { contacts, followings, followers } = action.payload;
-			state.contacts = contacts;
+			state.chats = contacts;
 			state.followings = followings;
 			state.followers = followers;
 			state.status = "succeeded";

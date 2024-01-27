@@ -6,7 +6,7 @@ import { toggleFollowStatus } from "../Store";
 function CardComponent({ _id, userName, profilePic, firstName, lastName }) {
 	const dispatch = useDispatch()
 	const user = useSelector((state) => state.user.currentUser);
-	const followings = useSelector((state) => state.contact.followings);
+	const followings = useSelector((state) => state.contacts.followings);
 
 	console.log(
 		followings && followings.some((following) => following._id === user.id)

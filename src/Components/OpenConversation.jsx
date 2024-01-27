@@ -1,60 +1,66 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Button, Form, InputGroup } from 'react-bootstrap';
-// import { useConversations } from "../Contexts/ConversationsProvider";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { Button, Form, InputGroup } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllUserChats, postChat } from "../Store";
+import Each from "./Each";
 
-const OpenConversation = ({ setModal }) => {
-	// const { sendMessage, selectedConversation } = useConversations();
+const OpenConversation = ({ id, setModal }) => {
+	const Message = useSelector((state) => state.chat.messages);
+	const user = useSelector((state) => state.user.currentUser);
+	const dispatch = useDispatch();
+	useEffect(() => {
+		console.log("chat id");
+		console.log(id);
+		dispatch(getAllUserChats(id));
+	}, []);
+
 	const [text, setText] = useState("");
 	const setRef = useCallback((node) => {
 		node && node.scrollIntoView({ smooth: true });
 	}, []);
-
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		// sendMessage(
-		//   selectedConversation.recipients.map((r) => r.id),
-		//   text
-		// );
+
+		dispatch(postChat({ chatId: id, text }));
 		setText("");
 	};
 	return (
 		<div className="h-100 d-flex flex-column flex-grow-1">
 			<nav className="p-2 bg-secondary text-white">
 				<button
-					onClick={()=>setModal(false)}
+					onClick={() => setModal(false)}
 					className="btn btn-outline-secondary text-white">
 					{"<-"}
 				</button>{" "}
 				go back
 			</nav>
 			<div className=" flex-grow-1 overflow-auto">
-				<div className=" d-flex flex-column align-items-start justify-content-end px-3">
-					{/* {selectedConversation.messages.map((message, index) => {
-            const lastMessage =
-              selectedConversation.messages.length - 1 === index;
-            return (
-              <div
-                key={index}
-                ref={lastMessage ? setRef : null}
-                className={`my-1 d-flex flex-column ${
-                  message.fromMe ? "align-self-end align-items-end" : "align-items-start"
-                }`}
-              >
-                <div
-                  className={`rounded px-2 py-1 
-                  ${message.fromMe ? "bg-primary text-white" : "border"}`}
-                >
-                  {message.text}
-                </div>
-                <div
-                  className={`text-muted small 
-                  ${message.fromMe ? "text-right" : ""}`}
-                >
-                  {message.fromMe ? "You" : message.senderName}
-                </div>
-              </div>
-            );
-          })} */}
+				<div className=" d-flex flex-column text-black align-items-start justify-content-end px-3">
+					{Message && (
+						<Each
+							of={Message}
+							render={(item, index) => (
+								<div
+									ref={Message.length - 1 === index ? setRef : null}
+									className={`my-1 d-flex flex-column ${
+										item.sender._id === user.id
+											? "align-self-end align-items-end"
+											: "align-items-start"
+									}`}>
+									<div
+										className={`rounded px-2 py-1
+									  ${item.sender._id === user.id ? "bg-primary text-white" : "border"}`}>
+										{item.text}
+									</div>
+									<div
+										className={`text-muted small
+									  ${item.sender._id === user.id ? "text-right" : ""}`}>
+										{item.sender._id === user.id ? "You" : item.sender.userName}
+									</div>
+								</div>
+							)}
+						/>
+					)}
 				</div>
 			</div>
 			<Form onSubmit={handleSubmit}>
@@ -67,9 +73,7 @@ const OpenConversation = ({ setModal }) => {
 							onChange={(e) => setText(e.target.value)}
 							style={{ height: "75px", resize: "none" }}
 						/>
-						{/* <InputGroup.> */}
 						<Button type="submit">send</Button>
-						{/* </InputGroup.Append> */}
 					</InputGroup>
 				</Form.Group>
 			</Form>

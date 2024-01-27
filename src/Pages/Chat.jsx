@@ -1,13 +1,21 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import SideBar from '../Components/SideBar';
 import OpenConversation from '../Components/OpenConversation';
 
 const Chat = () => {
-    const [openConversation, setOpenConversation] = useState(false)
+    const [openConversation, setOpenConversation] = useState('')
+	useEffect(() => {
+		console.log('chat id in openConversation');
+		console.log(openConversation);
+	}, [openConversation]);
+	
   return (
 		<div className="h-100">
 			{openConversation ? (
-				<OpenConversation setModal={setOpenConversation} />
+				<OpenConversation
+					id={openConversation}
+					setModal={setOpenConversation}
+				/>
 			) : (
 				<SideBar setModal={setOpenConversation} />
 			)}
