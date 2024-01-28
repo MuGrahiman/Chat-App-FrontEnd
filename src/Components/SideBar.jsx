@@ -35,10 +35,10 @@ const SideBar = ({ setModal }) => {
 				</Nav>
 				<Tab.Content className="border-end overflow-auto flex-grow-1">
 					<Tab.Pane eventKey={CONVERSATIONS_KEY}>
-						<Conversations setModal={setModal}/>
+						<Conversations setModal={setModal} />
 					</Tab.Pane>
 					<Tab.Pane eventKey={CONTACTS_KEY}>
-						<Contacts />
+						<Contacts setModal={setModal} />
 					</Tab.Pane>
 				</Tab.Content>
 				<div className="p-2 border small">

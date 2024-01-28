@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { getAllUser, userPostOTP, userRegister, userResendOtp } from '../Thunks/AuthThunk';
+import { getAllUsers, userPostOTP, userRegister, userResendOtp } from '../Thunks/AuthThunk';
 
 const initialState = {
 	status: 'idle', // loading: 'idle' | 'pending' | 'succeeded' | 'failed'
@@ -48,16 +48,16 @@ const authReducer = createReducer(initialState, (builder) => {
 			state.error = action.payload;
 			state.status = "failed";
 		})
-		.addCase(getAllUser.pending, (state, action) => {
+		.addCase(getAllUsers.pending, (state, action) => {
 			state.status = "pending";
 			state.error = null;
 		})
-		.addCase(getAllUser.fulfilled, (state, action) => {
+		.addCase(getAllUsers.fulfilled, (state, action) => {
 			state.authData = action.payload;
 			state.status = "succeeded";
 			state.error = null;
 		})
-		.addCase(getAllUser.rejected, (state, action) => {
+		.addCase(getAllUsers.rejected, (state, action) => {
 			state.error = action.payload;
 			state.status = "failed";
 		});

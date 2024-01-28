@@ -7,23 +7,25 @@ import Each from "./Each";
 const OpenConversation = ({ id, setModal }) => {
 	const Message = useSelector((state) => state.chat.messages);
 	const user = useSelector((state) => state.user.currentUser);
+	const [text, setText] = useState("");
 	const dispatch = useDispatch();
+
+	const setRef = useCallback((node) => {
+		node && node.scrollIntoView({ smooth: true });
+	}, []);
+
 	useEffect(() => {
 		console.log("chat id");
 		console.log(id);
 		dispatch(getAllUserChats(id));
 	}, []);
-
-	const [text, setText] = useState("");
-	const setRef = useCallback((node) => {
-		node && node.scrollIntoView({ smooth: true });
-	}, []);
+	
 	const handleSubmit = (e) => {
 		e.preventDefault();
-
 		dispatch(postChat({ chatId: id, text }));
 		setText("");
 	};
+
 	return (
 		<div className="h-100 d-flex flex-column flex-grow-1">
 			<nav className="p-2 bg-secondary text-white">
@@ -31,7 +33,7 @@ const OpenConversation = ({ id, setModal }) => {
 					onClick={() => setModal(false)}
 					className="btn btn-outline-secondary text-white">
 					{"<-"}
-				</button>{" "}
+				</button>
 				go back
 			</nav>
 			<div className=" flex-grow-1 overflow-auto">

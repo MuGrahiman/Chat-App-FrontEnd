@@ -64,7 +64,7 @@ export const userLogin = createAsyncThunk(
 	}
 );
 
-export const getAllUser = createAsyncThunk("auth/user", async () => {
-	const response = await Api.getAllUser();
+export const getAllUsers = createAsyncThunk("auth/user", async () => {
+	const response = await Api.getAllUsers();
 	return response.data;
 });

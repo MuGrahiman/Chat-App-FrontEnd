@@ -1,29 +1,70 @@
-import React from "react";
-import { ListGroup } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Badge, Form, InputGroup, ListGroup } from "react-bootstrap";
+import { MdPersonSearch } from "react-icons/md";
 import Each from "./Each";
 import { useSelector } from "react-redux";
 
 const Conversations = ({ setModal }) => {
 	const Chats = useSelector((state) => state.contacts.chats);
 	const user = useSelector((state) => state.user.currentUser);
+	const [chatList, setChatList] = useState([]);
+
+	useEffect(() => {
+		setChatList(Chats);
+	}, [Chats]);
+
+	const handleSearch = (searchText) => {
+		const text = searchText.trim().toLowerCase();
+		const filteredData = Chats.filter((chat) => {
+			return chat.chat.participants.some(
+				(participant) =>
+					participant._id !== user.id &&
+					participant.userName.trim().toLowerCase().includes(text)
+			);
+		});
+
+		setChatList(filteredData);
+	};
+	
 	return (
 		<ListGroup
 			variant="flush"
-			className="p-2">
-			{Chats && (
+			className="gap-1 p-2">
+			<InputGroup className="mb-3 rounded-pill border">
+				<Form.Control
+					className="border-0 rounded-end rounded-pill"
+					placeholder="Search name ..."
+					onChange={(e) => handleSearch(e.target.value)}
+				/>
+				<InputGroup.Text className="border-0 bg-white rounded-start rounded-pill">
+					<MdPersonSearch />
+				</InputGroup.Text>
+			</InputGroup>
+
+			{chatList && (
 				<Each
-					of={Chats}
+					of={chatList}
 					render={(item, index) => (
 						<ListGroup.Item
 							action
-							className="border rounded mb-1"
 							onClick={() => setModal(item?.chat?._id)}
 							// active={conversations.selected}
-						>
-							{item.chat &&
-								item?.chat?.participants
-									?.filter((r) => r._id !== user.id)
-									?.map((r) => r.userName)}
+							className="d-flex justify-content-between align-items-start border rounded ">
+							<div className="ms-2 me-auto">
+								<div className="fw-bold">
+									{item.chat &&
+										item?.chat?.participants
+											?.filter((r) => r._id !== user.id)
+											?.map((r) => r.userName)
+											.join(" ")}
+								</div>
+								Cras justo odio
+							</div>
+							<Badge
+								bg="primary"
+								pill>
+								14
+							</Badge>
 						</ListGroup.Item>
 					)}
 				/>

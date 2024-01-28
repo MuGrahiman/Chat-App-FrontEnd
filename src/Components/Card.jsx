@@ -8,11 +8,6 @@ function CardComponent({ _id, userName, profilePic, firstName, lastName }) {
 	const user = useSelector((state) => state.user.currentUser);
 	const followings = useSelector((state) => state.contacts.followings);
 
-	console.log(
-		followings && followings.some((following) => following._id === user.id)
-			
-	);
-	console.log(_id);
 	return (
 		<Card>
 			<Card.Header>{userName}</Card.Header>

@@ -6,11 +6,11 @@ import Chat from "../Pages/Chat";
 import Blog from "./Blog";
 
 import { useDispatch } from "react-redux";
-import { getAllUser, getAllUserContacts } from "../Store";
+import { getAllUsers, getAllUserContacts } from "../Store";
 const Dashboard = ({ id }) => {
 	const dispatch = useDispatch();
 	useEffect(() => {
-		dispatch(getAllUser());
+		dispatch(getAllUsers());
 		dispatch(getAllUserContacts());
 	}, []);
 	return (
