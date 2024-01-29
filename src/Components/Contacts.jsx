@@ -24,7 +24,7 @@ const Contacts = ({ setModal }) => {
 		);
 		setUserList(filteredData);
 	};
-	
+
 	return (
 		<>
 			<ListGroup
@@ -44,25 +44,29 @@ const Contacts = ({ setModal }) => {
 				{userList && userList[0] && (
 					<Each
 						of={userList}
-						render={(item, index) => (
-							<ListGroup.Item
-								action
-								// active={conversations.selected}
-								className="d-flex justify-content-between align-items-start border rounded ">
-								<div
-									className="ms-2 me-auto"
-									onClick={() => setModal(item?.chat?._id)}>
-									<div className="fw-bold">{item?.userName}</div>
-									{item.firstName + " " + item.lastName}
-								</div>
-								<Badge onClick={() => dispatch(toggleFollowStatus(item._id))}>
-									{followings &&
-									followings.some((following) => following._id === item._id)
-										? "un follow"
-										: "follow"}
-								</Badge>
-							</ListGroup.Item>
-						)}
+						render={(item, index) =>{
+							return (
+							<>
+								<ListGroup.Item
+									action
+									// active={conversations.selected}
+									className="d-flex justify-content-between align-items-start border rounded ">
+									
+									<div
+										className="ms-2 me-auto"
+										onClick={() => setModal(item?._id)}>
+										<div className="fw-bold">{item?.userName}</div>
+										{item.firstName + " " + item.lastName}
+									</div>
+									<Badge onClick={() => dispatch(toggleFollowStatus(item._id))}>
+										{followings &&
+										followings.some((following) => following._id === item._id)
+											? "un follow"
+											: "follow"}
+									</Badge>
+								</ListGroup.Item>
+							</>
+						)}}
 					/>
 				)}
 			</ListGroup>

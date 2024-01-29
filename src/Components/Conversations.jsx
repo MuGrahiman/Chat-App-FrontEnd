@@ -25,7 +25,7 @@ const Conversations = ({ setModal }) => {
 
 		setChatList(filteredData);
 	};
-	
+
 	return (
 		<ListGroup
 			variant="flush"
@@ -44,29 +44,32 @@ const Conversations = ({ setModal }) => {
 			{chatList && (
 				<Each
 					of={chatList}
-					render={(item, index) => (
-						<ListGroup.Item
-							action
-							onClick={() => setModal(item?.chat?._id)}
-							// active={conversations.selected}
-							className="d-flex justify-content-between align-items-start border rounded ">
-							<div className="ms-2 me-auto">
-								<div className="fw-bold">
-									{item.chat &&
-										item?.chat?.participants
-											?.filter((r) => r._id !== user.id)
-											?.map((r) => r.userName)
-											.join(" ")}
+					render={(item, index) => {
+						const recipient = item.chat &&
+											item?.chat?.participants
+												?.filter((r) => r._id !== user.id)
+												console.log(recipient)
+						return (
+							<ListGroup.Item
+								action
+								onClick={() => setModal(recipient?.map((r) => r._id))}
+								// active={conversations.selected}
+								className="d-flex justify-content-between align-items-start border rounded ">
+								
+								<div className="ms-2 me-auto">
+									<div className="fw-bold">
+										{recipient?.map((r) => r.userName).join(" ")}
+									</div>
+									Cras justo odio
 								</div>
-								Cras justo odio
-							</div>
-							<Badge
-								bg="primary"
-								pill>
-								14
-							</Badge>
-						</ListGroup.Item>
-					)}
+								<Badge
+									bg="primary"
+									pill>
+									14
+								</Badge>
+							</ListGroup.Item>
+						);
+					}}
 				/>
 			)}
 
