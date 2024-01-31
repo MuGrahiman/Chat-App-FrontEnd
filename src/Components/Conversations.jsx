@@ -4,8 +4,8 @@ import { MdPersonSearch } from "react-icons/md";
 import Each from "./Each";
 import { useSelector } from "react-redux";
 
-const Conversations = ({ setModal }) => {
-	const Chats = useSelector((state) => state.contacts.chats);
+const Conversations = ({ openChat }) => {
+	const Chats = useSelector((state) => state.userContacts.chats);
 	const user = useSelector((state) => state.user.currentUser);
 	const [chatList, setChatList] = useState([]);
 
@@ -45,22 +45,27 @@ const Conversations = ({ setModal }) => {
 				<Each
 					of={chatList}
 					render={(item, index) => {
-						const recipient = item.chat &&
-											item?.chat?.participants
-												?.filter((r) => r._id !== user.id)
-												console.log(recipient)
+						const { type, chat } = item;
+						let chatName, id;
+						const recipient =
+							chat && chat?.participants?.filter((r) => r._id !== user.id);
+						console.log(recipient);
+						if (type === "Private") {
+							chatName = recipient?.map((r) => r.userName);
+							id = recipient?.map((r) => r._id);
+						} else {
+							id = chat._id;
+							chatName = chat.chatName;
+						}
 						return (
 							<ListGroup.Item
 								action
-								onClick={() => setModal(recipient?.map((r) => r._id))}
+								onClick={() => openChat({ type: type.toLowerCase(), id })}
 								// active={conversations.selected}
 								className="d-flex justify-content-between align-items-start border rounded ">
-								
 								<div className="ms-2 me-auto">
-									<div className="fw-bold">
-										{recipient?.map((r) => r.userName).join(" ")}
-									</div>
-									Cras justo odio
+									<div className="fw-bold">{chatName}</div>
+									{type}
 								</div>
 								<Badge
 									bg="primary"
@@ -77,12 +82,12 @@ const Conversations = ({ setModal }) => {
 				action
 				onClick={() => selectConversationIndex(index)}
 				active={conversations.selected}
-				onClick={() => setModal(true)}>
+				onClick={() => openChat(true)}>
 				Maji
 			</ListGroup.Item>
 			<ListGroup.Item
 				action
-				onClick={() => setModal(true)}
+				onClick={() => openChat(true)}
 				active>
 				Majeed
 			</ListGroup.Item> */}

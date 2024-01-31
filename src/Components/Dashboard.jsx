@@ -1,7 +1,4 @@
 import React, { useEffect } from "react";
-import SideBar from "./SideBar";
-import OpenConversation from "./OpenConversation";
-import { useConversations } from "../Contexts/ConversationsProvider";
 import Chat from "../Pages/Chat";
 import Blog from "./Blog";
 
@@ -12,6 +9,7 @@ const Dashboard = ({ id }) => {
 	useEffect(() => {
 		dispatch(getAllUsers());
 		dispatch(getAllUserContacts());
+		// dispatch(getAllGroups());
 	}, []);
 	return (
 		<div

@@ -5,10 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import Each from "./Each";
 import { toggleFollowStatus } from "../Store";
 
-const Contacts = ({ setModal }) => {
+const Contacts = ({ openChat }) => {
 	const dispatch = useDispatch();
 	const authData = useSelector((state) => state.auth.authData);
-	const followings = useSelector((state) => state.contacts.followings);
+	const followings = useSelector((state) => state.userContacts.followings);
 	const [userList, setUserList] = useState([]);
 
 	useEffect(() => {
@@ -44,29 +44,32 @@ const Contacts = ({ setModal }) => {
 				{userList && userList[0] && (
 					<Each
 						of={userList}
-						render={(item, index) =>{
+						render={(item, index) => {
 							return (
-							<>
-								<ListGroup.Item
-									action
-									// active={conversations.selected}
-									className="d-flex justify-content-between align-items-start border rounded ">
-									
-									<div
-										className="ms-2 me-auto"
-										onClick={() => setModal(item?._id)}>
-										<div className="fw-bold">{item?.userName}</div>
-										{item.firstName + " " + item.lastName}
-									</div>
-									<Badge onClick={() => dispatch(toggleFollowStatus(item._id))}>
-										{followings &&
-										followings.some((following) => following._id === item._id)
-											? "un follow"
-											: "follow"}
-									</Badge>
-								</ListGroup.Item>
-							</>
-						)}}
+								<>
+									<ListGroup.Item
+										action
+										// active={conversations.selected}
+										className="d-flex justify-content-between align-items-start border rounded ">
+										<div
+											className="ms-2 me-auto"
+											onClick={() =>
+												openChat({ type: "private", id: item?._id })
+											}>
+											<div className="fw-bold">{item?.userName}</div>
+											{item.firstName + " " + item.lastName}
+										</div>
+										<Badge
+											onClick={() => dispatch(toggleFollowStatus(item._id))}>
+											{followings &&
+											followings.some((following) => following._id === item._id)
+												? "un follow"
+												: "follow"}
+										</Badge>
+									</ListGroup.Item>
+								</>
+							);
+						}}
 					/>
 				)}
 			</ListGroup>

@@ -1,12 +1,14 @@
 import { createReducer } from "@reduxjs/toolkit";
 import {
+	createGroup,
+	// getAllGroups,
 	getAllUserContacts,
 	toggleFollowStatus,
-} from "../Thunks/ContactThunk.js";
+} from "../Thunks/UserContactThunk.js";
 
 const initialState = {
 	status: "idle", // loading: 'idle' | 'pending' | 'succeeded' | 'failed'
-	chats: null,
+	chats: [],
 	followings: null,
 	followers: null,
 	error: null,
@@ -45,7 +47,34 @@ const ContactReducer = createReducer(initialState, (builder) => {
 		.addCase(toggleFollowStatus.rejected, (state, action) => {
 			state.error = action.payload;
 			state.status = "failed";
+		})
+		// .addCase(getAllGroups.pending, (state, action) => {
+		// 	state.status = "pending";
+		// 	state.error = null;
+		// })
+		// .addCase(getAllGroups.fulfilled, (state, action) => {
+		// 	state.chats = action.payload;
+		// 	state.status = "succeeded";
+		// 	state.error = null;
+		// })
+		// .addCase(getAllGroups.rejected, (state, action) => {
+		// 	state.error = action.payload;
+		// 	state.status = "failed";
+		// })
+		.addCase(createGroup.pending, (state, action) => {
+			state.status = "pending";
+			state.error = null;
+		})
+		.addCase(createGroup.fulfilled, (state, action) => {
+			state.chats.push(action.payload);
+			state.status = "succeeded";
+			state.error = null;
+		})
+		.addCase(createGroup.rejected, (state, action) => {
+			state.error = action.payload;
+			state.status = "failed";
 		});
+
 });
 
 export default ContactReducer;

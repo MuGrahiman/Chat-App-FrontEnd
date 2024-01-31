@@ -10,13 +10,21 @@ API.interceptors.request.use((req) => {
 
 	return req;
 });
+
 export const userRegister = (data) => API.post("user/register", data);
 export const userPostOTP = ({ id, data }) =>
 	API.post(`/otp/${id}`, { otp: data });
 export const userResendOtp = (id) => API.get(`/otp/${id}`);
 export const userLogin = (data) => API.post("user/Login", data);
 export const getAllUsers = () => API.get("user/get");
-export const getAllUserContacts = () => API.get("contact");
-export const toggleFollowStatus = (id) => API.patch(`contact`,id);
-export const getAllUserChats = (id) => API.get(`chat/${id}`);
-export const postChat = ({chatId,text}) => API.post(`chat/${chatId}`, {text});
+
+export const getAllUserContacts = () => API.get("contact/user");
+export const toggleFollowStatus = (id) => API.patch(`contact/user`,id);
+// export const getAllGroups = () => API.get("contact/group");
+export const createGroup = (data) => API.post("contact/group", data);
+// export const joinGroup = (id) => API.patch(`contact/group`, id);
+export const removeGroup = (id) => API.delete(`contact/group`, id);
+
+export const getAllUserChats = ({ type, id }) => API.get(`chat/${type}/${id}`);
+export const postChat = ({ type, id, text }) =>
+	API.post(`chat/${type}/${id}`, {text});

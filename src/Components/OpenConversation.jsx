@@ -1,28 +1,40 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Button, Form, InputGroup } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllUserChats, postChat } from "../Store";
+import { getAllGrpMsgs, getAllPvtMsgs, postGrpMsg, postPvtMsg } from "../Store";
 import Each from "./Each";
 
-const OpenConversation = ({ id, setModal }) => {
-	const Message = useSelector((state) => state.chat.messages);
+const OpenConversation = ({ type, id, closeConversation }) => {
+		useEffect(() => {
+			console.log("chat id");
+			console.log(id, type);
+			dispatch(
+				type === "private"
+					? getAllPvtMsgs({ type, id })
+					: getAllGrpMsgs({ type, id })
+			);
+		}, []);
+
+	const Message = useSelector((state) => state[type].messages);
 	const user = useSelector((state) => state.user.currentUser);
 	const [text, setText] = useState("");
+
 	const dispatch = useDispatch();
 
 	const setRef = useCallback((node) => {
 		node && node.scrollIntoView({ smooth: true });
 	}, []);
 
-	useEffect(() => {
-		console.log("chat id");
-		console.log(id);
-		dispatch(getAllUserChats(id));
-	}, []);
-	
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		dispatch(postChat({ chatId: id, text }));
+		console.log(text,' ',id);
+		if (!text) return alert("Enter your text");
+		dispatch(
+			type === "private"
+				? postPvtMsg({ type, id, text })
+				: postGrpMsg({ type, id, text })
+		);
+
 		setText("");
 	};
 
@@ -30,7 +42,7 @@ const OpenConversation = ({ id, setModal }) => {
 		<div className="h-100 d-flex flex-column flex-grow-1">
 			<nav className="p-2 bg-secondary text-white">
 				<button
-					onClick={() => setModal(false)}
+					onClick={closeConversation}
 					className="btn btn-outline-secondary text-white">
 					{"<-"}
 				</button>

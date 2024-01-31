@@ -1,41 +1,14 @@
 import React, { useState } from "react";
 import { Button, Form, InputGroup, Modal, Nav, Tab } from "react-bootstrap";
-import Conversations from "./Conversations";
-import Contacts from "./Contacts";
-import NewContactModal from "./NewContactModal";
-import NewConversationModal from "./NewConversationModal";
+
 import useAuth from "../Hooks/useAuth";
 import { useSelector } from "react-redux";
 import Each from "./Each";
-import Groups from "./Groups";
-import { MdPersonSearch } from "react-icons/md";
-import NewGroupModal from "./NewGroupModal";
 
-const SideBar = ({ setModal }) => {
-	const CHATS_KEY = "Chats";
-	const GROUPS_KEY = "Groups";
-	const CONTACTS_KEY = "Contacts";
-	const Items = [
-		{
-			ItemKey: CHATS_KEY,
-			Component: Conversations,
-			ModalComponent: NewConversationModal,
-		},
-		{
-			ItemKey: GROUPS_KEY,
-			Component: Groups,
-			ModalComponent: NewGroupModal,
-		},
-		{
-			ItemKey: CONTACTS_KEY,
-			Component: Contacts,
-			ModalComponent: NewContactModal,
-		},
-	];
+const SideBar = ({ openChat, activeKey, setActiveKey, Items }) => {
 	const user = useSelector((state) => state.user.currentUser);
 	const [_, removeAuthentication] = useAuth();
 	const [modalOpen, setModalOpen] = useState(false);
-	const [activeKey, setActiveKey] = useState(CHATS_KEY);
 	const closeModal = () => setModalOpen(false);
 	return (
 		<div
@@ -74,7 +47,7 @@ const SideBar = ({ setModal }) => {
 						render={({ ItemKey, Component }, index) => {
 							return (
 								<Tab.Pane eventKey={ItemKey}>
-									<Component setModal={setModal} />
+									<Component openChat={openChat} />
 								</Tab.Pane>
 							);
 						}}
@@ -101,7 +74,7 @@ const SideBar = ({ setModal }) => {
 				<Each
 					of={Items}
 					render={({ ItemKey, ModalComponent }) =>
-						ItemKey === activeKey && <ModalComponent />
+						ItemKey === activeKey && <ModalComponent closeModal={closeModal} />
 					}
 				/>
 			</Modal>

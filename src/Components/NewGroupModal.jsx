@@ -1,39 +1,46 @@
 import React, { useRef, useEffect, useState } from "react";
 import { MdPersonSearch } from "react-icons/md";
-import {
-	Form,
-	InputGroup,
-	ListGroup,
-	Button,
-	Modal,
-} from "react-bootstrap";
+import { Form, InputGroup, ListGroup, Button, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Each from "./Each";
+import { createGroup } from "../Store";
 
 const NewGroupModal = ({ closeModal }) => {
-    const dispatch = useDispatch();
-		const authData = useSelector((state) => state.auth.authData);
-		const [userList, setUserList] = useState([]);
-
-		useEffect(() => {
-			setUserList(authData);
-		}, [authData]);
-		const handleSearch = (searchText) => {
-			const text = searchText.trim().toLowerCase();
-			const filteredData = authData.filter(
-				(data) =>
-					data.userName.trim().toLowerCase().includes(text) ||
-					data.firstName.trim().toLowerCase().includes(text) ||
-					data.lastName.trim().toLowerCase().includes(text)
-			);
-			setUserList(filteredData);
-		};
-
-	const idRef = useRef();
+	const dispatch = useDispatch();
 	const nameRef = useRef();
+	const authData = useSelector((state) => state.auth.authData);
+	const [userList, setUserList] = useState([]);
+	const [selectedIds, setSelectedIds] = useState([]);
+
+	useEffect(() => {
+		setUserList(authData);
+	}, [authData]);
+	const handleSearch = (searchText) => {
+		const text = searchText.trim().toLowerCase();
+		const filteredData = authData.filter(
+			(data) =>
+				data.userName.trim().toLowerCase().includes(text) ||
+				data.firstName.trim().toLowerCase().includes(text) ||
+				data.lastName.trim().toLowerCase().includes(text)
+		);
+		setUserList(filteredData);
+	};
+	const handleUserSelection = (id) => {
+		console.log(id);
+		console.log(selectedIds.includes(id));
+		if (selectedIds.includes(id)) {
+			const filterIds = selectedIds.filter((selectedId) => selectedId !== id);
+			setSelectedIds([...filterIds]);
+		} else setSelectedIds((prev) => [...prev, id]);
+	};
 	const handleSubmit = (e) => {
-		e.preventDefault();
-		closeModal();
+		e.preventDefault(); 
+		const name = nameRef.current.value
+		console.log(name)
+		if (!name)alert('Enter the group name ');
+		if(selectedIds.length === 0)alert("Please select any user");
+		dispatch(createGroup({name,ids:selectedIds}))
+		 closeModal();
 	};
 	return (
 		<>
@@ -74,40 +81,19 @@ const NewGroupModal = ({ closeModal }) => {
 									render={(item, index) => {
 										return (
 											<>
-												
 												<ListGroup.Item
 													action
 													// active={conversations.selected}
 													className="d-flex justify-content-between align-items-start border rounded bg-light">
-													<div
-														className="ms-2 me-auto"
-														// onClick={() => setModal(item?._id)}
-													>
+													<div className="ms-2 me-auto">
 														<div className="fw-bold">{item?.userName}</div>
 														{item.firstName + " " + item.lastName}
 													</div>
 													<Form.Check
-														// custom
-														inline
-														// label="1"
-														color="green"
-														// bsSwitchPrefix="bg-success"
-														bsPrefix="bg-success"
-														className="m-auto text-success border-0"
+														onClick={() => handleUserSelection(item._id)}
+														className="m-auto "
 														type={"checkbox"}
-														// id={`inline-${type}-1`}
 													/>
-													{/* <Badge
-														onClick={() =>
-															dispatch(toggleFollowStatus(item._id))
-														}>
-														{followings &&
-														followings.some(
-															(following) => following._id === item._id
-														)
-															? "un follow"
-															: "follow"}
-													</Badge> */}
 												</ListGroup.Item>
 											</>
 										);
