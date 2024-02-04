@@ -4,6 +4,7 @@ import Blog from "./Blog";
 
 import { useDispatch } from "react-redux";
 import { getAllUsers, getAllUserContacts } from "../Store";
+import MyComponent from "./Mycomponent";
 const Dashboard = ({ id }) => {
 	const dispatch = useDispatch();
 	useEffect(() => {
@@ -16,7 +17,7 @@ const Dashboard = ({ id }) => {
 			style={{ height: "100vh" }}
 			className="d-flex">
 			<Chat />
-			<Blog /> 
+			<Blog />
 		</div>
 	);
 };

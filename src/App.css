@@ -36,3 +36,25 @@
 		transform: rotate(360deg);
 	}
 }
+/* .offcanvas-parent {
+}
+
+.offcanvas {
+} */
+
+
+.offcanvas-parent {
+  position: relative !important;
+  overflow: hidden;
+
+ 
+}
+
+ .offcanva {
+  position: absolute !important;
+  }
+  .offcanvas-backdrop {
+    position: absolute!important;
+    height: 100% !important;
+    width: 100% !important;
+  }

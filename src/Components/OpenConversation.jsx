@@ -1,23 +1,27 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Button, Form, InputGroup } from "react-bootstrap";
+import { Button, CloseButton, Form, InputGroup, Modal, Offcanvas } from "react-bootstrap";
+import { IoMdMore, IoMdArrowDropleft } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllGrpMsgs, getAllPvtMsgs, postGrpMsg, postPvtMsg } from "../Store";
 import Each from "./Each";
+import ProfileOffcanvas from "./ProfileOffcanvas";
+import ChatProfile from "../Pages/ChatProfile";
 
 const OpenConversation = ({ type, id, closeConversation }) => {
-		useEffect(() => {
-			console.log("chat id");
-			console.log(id, type);
-			dispatch(
-				type === "private"
-					? getAllPvtMsgs({ type, id })
-					: getAllGrpMsgs({ type, id })
-			);
-		}, []);
+	useEffect(() => {
+		console.log("chat id");
+		console.log(id, type);
+		dispatch(
+			type === "private"
+				? getAllPvtMsgs({ type, id })
+				: getAllGrpMsgs({ type, id })
+		);
+	}, []);
 
 	const Message = useSelector((state) => state[type].messages);
 	const user = useSelector((state) => state.user.currentUser);
 	const [text, setText] = useState("");
+	const [modal, setModal] = useState(false);
 
 	const dispatch = useDispatch();
 
@@ -27,7 +31,7 @@ const OpenConversation = ({ type, id, closeConversation }) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log(text,' ',id);
+		console.log(text, " ", id);
 		if (!text) return alert("Enter your text");
 		dispatch(
 			type === "private"
@@ -39,16 +43,27 @@ const OpenConversation = ({ type, id, closeConversation }) => {
 	};
 
 	return (
-		<div className="h-100 d-flex flex-column flex-grow-1">
-			<nav className="p-2 bg-secondary text-white">
+		<div className="h-100 d-flex flex-column flex-grow-1 position-relative ">
+			<nav className="p-2 bg-secondary text-white d-flex align-items-center justify-content-between">
 				<button
 					onClick={closeConversation}
-					className="btn btn-outline-secondary text-white">
-					{"<-"}
+					className="btn text-white">
+					<IoMdArrowDropleft size={20} />
 				</button>
-				go back
+				<span>go back </span>
+				<button className="btn text-white">
+					{/* {modal ? (
+						<CloseButton
+							variant="white"
+							onClick={() => setModal(false)}
+						/>
+					) : ( */}
+					<IoMdMore onClick={() => setModal(true)} />
+					{/*  )}  */}
+				</button>
 			</nav>
-			<div className=" flex-grow-1 overflow-auto">
+
+			<div className=" flex-grow-1 overflow-auto ">
 				<div className=" d-flex flex-column text-black align-items-start justify-content-end px-3">
 					{Message && (
 						<Each
@@ -76,6 +91,10 @@ const OpenConversation = ({ type, id, closeConversation }) => {
 						/>
 					)}
 				</div>
+				<ChatProfile
+					open={modal}
+					onClose={() => setModal(false)}
+				/>
 			</div>
 			<Form onSubmit={handleSubmit}>
 				<Form.Group className="m-2">
