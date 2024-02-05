@@ -69,15 +69,6 @@ export const createGroup = createAsyncThunk(
 	}
 );
 
-// export const joinGroup = createAsyncThunk(
-// 	"contact/group/join",
-// 	async (id, thunkApi) => {
-// 		const response = await Api.joinGroup({ id });
-// 		thunkApi.dispatch(getAllGroups());
-// 		return response.data;
-// 	}
-// );
-
 export const removeGroup = createAsyncThunk(
 	"contact/group/remove",
 	async (id, thunkApi) => {
@@ -86,4 +77,40 @@ export const removeGroup = createAsyncThunk(
 		return response.data;
 	}
 );
+
+export const createChannel = createAsyncThunk(
+	"contact/channel/create",
+	async (data, thunkApi) => {
+		try {
+			const response = await Api.createChannel(data);
+			console.log(response);
+			thunkApi.dispatch(getAllUserContacts());
+			return response.data;
+		} catch (error) {
+			return thunkApi.rejectWithValue(
+				error?.response?.data?.message ||
+					error?.response?.message ||
+					error?.message ||
+					"something went wrong"
+			);
+		}
+	}
+);
+// export const joinChannel = createAsyncThunk(
+// 	"contact/channel/join",
+// 	async (id, thunkApi) => {
+// 		const response = await Api.joinChannel({ id });
+// 		thunkApi.dispatch(getAllChannels());
+// 		return response.data;
+// 	}
+// );
+
+// export const removeChannel = createAsyncThunk(
+// 	"contact/group/remove",
+// 	async (id, thunkApi) => {
+// 		const response = await Api.removeChannel({ id });
+// 		thunkApi.dispatch(getAllUserContacts());
+// 		return response.data;
+// 	}
+// );
 

@@ -11,12 +11,14 @@ const Contacts = ({ openChat }) => {
 	const followings = useSelector((state) => state.userContacts.followings);
 	const [userList, setUserList] = useState([]);
 
-		useEffect(() => {
-			const filteredUsers = authData.filter(
-				(user) => followings.some((following) => following._id === user._id)
+	useEffect(() => {
+		if (authData && followings) {
+			const filteredUsers = authData.filter((user) =>
+				followings.some((following) => following._id === user._id)
 			);
 			setUserList(filteredUsers);
-		}, [authData, followings]);
+		}
+	}, [authData, followings]);
 	const handleSearch = (searchText) => {
 		const text = searchText.trim().toLowerCase();
 		const filteredData = authData.filter(

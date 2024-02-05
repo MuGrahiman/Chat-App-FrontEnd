@@ -20,10 +20,12 @@ export const getAllUsers = () => API.get("user/get");
 
 export const getAllUserContacts = () => API.get("contact/user");
 export const toggleFollowStatus = (id) => API.patch(`contact/user`,id);
-// export const getAllGroups = () => API.get("contact/group");
+export const deleteChat = (id) => API.delete(`contact/user`, id);
 export const createGroup = (data) => API.post("contact/group", data);
-// export const joinGroup = (id) => API.patch(`contact/group`, id);
 export const removeGroup = (id) => API.delete(`contact/group`, id);
+export const createChannel = (data) => API.post("contact/channel", data);
+// export const getAllGroups = () => API.get("contact/channel");
+// export const joinGroup = (id) => API.patch(`contact/channel`, id);
 
 export const getAllUserChats = ({ type, id }) => API.get(`chat/${type}/${id}`);
 export const postChat = ({ type, id, text }) =>

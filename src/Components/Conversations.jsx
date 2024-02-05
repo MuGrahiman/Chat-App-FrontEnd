@@ -41,7 +41,7 @@ const Conversations = ({ openChat }) => {
 				</InputGroup.Text>
 			</InputGroup>
 
-			{chatList && (
+			{chatList[0] && (
 				<Each
 					of={chatList}
 					render={(item, index) => {
@@ -54,8 +54,8 @@ const Conversations = ({ openChat }) => {
 							chatName = recipient?.map((r) => r.userName);
 							id = recipient?.map((r) => r._id);
 						} else {
-							id = chat._id;
-							chatName = chat.chatName;
+							id = chat?._id;
+							chatName = chat?.chatName;
 						}
 						return (
 							<ListGroup.Item

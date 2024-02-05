@@ -6,7 +6,7 @@ import NewGroupModal from "../Components/NewGroupModal";
 import Groups from "../Components/Groups";
 import NewConversationModal from "../Components/NewConversationModal";
 import Contacts from "../Components/Contacts";
-import NewContactModal from "../Components/NewContactModal";
+import NewChannelModal from "../Components/NewChannelModal";
 
 const CHATS_KEY = "Chats";
 const CHANNEL_KEY = "Channels";
@@ -20,7 +20,7 @@ const Items = [
 	{
 		ItemKey: CHANNEL_KEY,
 		Component: Groups,
-		ModalComponent: NewContactModal,
+		ModalComponent: NewChannelModal,
 	},
 	{
 		ItemKey: CONNECTION_KEY,

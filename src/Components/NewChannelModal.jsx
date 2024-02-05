@@ -1,14 +1,18 @@
-import React, { useRef } from 'react';
-import { Button, Form, Modal } from 'react-bootstrap';
-// import { useContacts } from '../Contexts/ContactsProvider';
+import React, { useRef } from "react";
+import { Button, Form, Modal } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { createChannel } from "../Store";
 
-const NewContactModal = ({ closeModal }) => {
+const NewChannelModal = ({ closeModal }) => {
+	const dispatch = useDispatch();
 	const idRef = useRef();
 	const nameRef = useRef();
-	// const {createContact}=useContacts()
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		// createContact(idRef.current.value,nameRef.current.value)
+		const name = nameRef.current.value.trim();
+		console.log(name);
+		if (!name) return alert("Enter your channel name");
+		dispatch(createChannel({ name }));
 		closeModal();
 	};
 	return (
@@ -33,11 +37,15 @@ const NewContactModal = ({ closeModal }) => {
 							required
 						/>
 					</Form.Group>
-					<Button type="submit" className='mt-2'>create </Button>
+					<Button
+						type="submit"
+						className="mt-2">
+						create
+					</Button>
 				</Form>
 			</Modal.Body>
 		</>
 	);
 };
 
-export default NewContactModal;
+export default NewChannelModal;
