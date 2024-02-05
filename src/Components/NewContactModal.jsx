@@ -13,13 +13,13 @@ const NewContactModal = ({ closeModal }) => {
 	};
 	return (
 		<>
-			<Modal.Header closeButton>Create Contact</Modal.Header>
+			<Modal.Header closeButton>Create New Channel</Modal.Header>
 			<Modal.Body>
 				<Form onSubmit={handleSubmit}>
 					<Form.Group>
 						<Form.Label>Id</Form.Label>
 						<Form.Control
-							type='text'
+							type="text"
 							ref={idRef}
 							required
 						/>
@@ -27,12 +27,13 @@ const NewContactModal = ({ closeModal }) => {
 					<Form.Group>
 						<Form.Label>Name</Form.Label>
 						<Form.Control
-							type='text'
+							type="text"
+							placeholder="Enter the name of your channel ..."
 							ref={nameRef}
 							required
 						/>
 					</Form.Group>
-					<Button type='submit'>create </Button>
+					<Button type="submit" className='mt-2'>create </Button>
 				</Form>
 			</Modal.Body>
 		</>

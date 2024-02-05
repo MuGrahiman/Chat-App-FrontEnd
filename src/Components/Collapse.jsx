@@ -7,13 +7,13 @@ const CollapseWrapper = ({ open, dimension ,children,onClose}) => {
 		<Collapse
 			in={open}
 			dimension={dimension}>
-			<div
+			{/* <div
 				id="example-collapse-text"
-				style={{ width: "100%", height: "100vh" }}
-				className="position-absolute top-0 mx-auto bg-light text-dark">
-			
+				style={{ width: "100%", height: "100dvh" }}
+				className="position-absolute top-0  bg-light text-dark">
+			 */}
 				{children}
-			</div>
+			{/* </div> */}
 		</Collapse>
 	);
 };

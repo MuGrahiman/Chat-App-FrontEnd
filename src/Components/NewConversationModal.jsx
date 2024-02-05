@@ -1,42 +1,82 @@
-import React, { useState } from 'react';
-import { Button, Form, Modal } from 'react-bootstrap';
-// import { useContacts } from "../Contexts/ContactsProvider";
-// import { useConversations } from "../Contexts/ConversationsProvider";
+import React, { useEffect, useRef, useState } from 'react';
+import { Button, Form, InputGroup, ListGroup, Badge, Modal } from "react-bootstrap";
+import { useDispatch, useSelector } from 'react-redux';
+import Each from "./Each";
+import { MdPersonSearch } from "react-icons/md";
+import { toggleFollowStatus } from "../Store";
 
 const NewConversationModal = ({ closeModal }) => {
-	// const { contacts } = useContacts();
-	// const { createConversation } = useConversations();
-	const [selectedCotactIds, setSelectedContactIds] = useState([]);
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		// createConversation(selectedContactIds)
-		closeModal();
-	};
-	const handleCheckBoxChange = (contactId) => {
-		setSelectedContactIds((prevSelectedContactIds) => {
-			if (prevSelectedContactIds.includes(contactId))
-				return prevSelectedContactIds.filter((prevId) => contactId !== prevId);
-			else return [...prevSelectedContactIds, contactId];
-		});
-	};
+		const dispatch = useDispatch();
+		const authData = useSelector((state) => state.auth.authData);
+		const followings = useSelector((state) => state.userContacts.followings);
+		const [userList, setUserList] = useState([]);
+
+		useEffect(() => {
+			const filteredUsers = authData.filter(
+				(user) => !followings.some((following) => following._id === user._id)
+			);
+			setUserList(filteredUsers);
+		}, [authData, followings]);
+		const handleSearch = (searchText) => {
+			const text = searchText.trim().toLowerCase();
+			const filteredData = authData.filter(
+				(data) =>
+					data.userName.trim().toLowerCase().includes(text) ||
+					data.firstName.trim().toLowerCase().includes(text) ||
+					data.lastName.trim().toLowerCase().includes(text)
+			);
+			setUserList(filteredData);
+		};
+	
 	return (
 		<>
-			<Modal.Header closeButton>Create Conversation</Modal.Header>
+			<Modal.Header closeButton>Create New Connections</Modal.Header>
 			<Modal.Body>
-				<Form onSubmit={handleSubmit}>
-					{/* {contacts.map((contact) => (
-            <Form.Group controlId={contact.id} key={contact.id}>
-              <Form.Check
-                type="checkbox"
-                value={selectedContactIds.includes(contact.id)}
-                label={contact.name}
-                onChange={() => handleCheckBoxChange(contact.id)}
-              />
-            </Form.Group>
-          ))} */}
-					<Button type='submit'>create </Button>
-				</Form>
+				<ListGroup
+					variant="flush"
+					className="gap-1 p-2">
+					<InputGroup className="mb-3 rounded-pill border">
+						<Form.Control
+							className="border-0 rounded-end rounded-pill"
+							placeholder="Search name ..."
+							onChange={(e) => handleSearch(e.target.value)}
+						/>
+						<InputGroup.Text className="border-0 bg-white rounded-start rounded-pill">
+							<MdPersonSearch />
+						</InputGroup.Text>
+					</InputGroup>
+
+					{userList && userList[0] && (
+						<Each
+							of={userList}
+							render={(item, index) => {
+								return (
+									<>
+										<ListGroup.Item
+											action
+											// active={conversations.selected}
+											className="d-flex justify-content-between align-items-start border rounded ">
+											<div className="ms-2 me-auto">
+												<div className="fw-bold">{item?.userName}</div>
+												{item.firstName + " " + item.lastName}
+											</div>
+											<Badge
+												onClick={() => dispatch(toggleFollowStatus(item._id))}>
+												{followings &&
+												followings.some(
+													(following) => following._id === item._id
+												)
+													? "un follow"
+													: "follow"}
+											</Badge>
+										</ListGroup.Item>
+									</>
+								);
+							}}
+						/>
+					)}
+				</ListGroup>
 			</Modal.Body>
 		</>
 	);

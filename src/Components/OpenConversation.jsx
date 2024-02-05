@@ -63,7 +63,7 @@ const OpenConversation = ({ type, id, closeConversation }) => {
 				</button>
 			</nav>
 
-			<div className=" flex-grow-1 overflow-auto ">
+			<div className=" flex-grow-1 overflow-auto bg-secondary">
 				<div className=" d-flex flex-column text-black align-items-start justify-content-end px-3">
 					{Message && (
 						<Each
