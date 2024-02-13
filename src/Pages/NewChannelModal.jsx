@@ -2,8 +2,9 @@ import React, { useRef } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { createChannel } from "../Store";
+import ModalWrapper from "../Components/Modal";
 
-const NewChannelModal = ({ closeModal }) => {
+const NewChannelModal = ({ closeModal, openModal }) => {
 	const dispatch = useDispatch();
 	const idRef = useRef();
 	const nameRef = useRef();
@@ -16,7 +17,9 @@ const NewChannelModal = ({ closeModal }) => {
 		closeModal();
 	};
 	return (
-		<>
+		<ModalWrapper
+			closeModal={closeModal}
+			openModal={openModal}>
 			<Modal.Header closeButton>Create New Channel</Modal.Header>
 			<Modal.Body>
 				<Form onSubmit={handleSubmit}>
@@ -44,7 +47,7 @@ const NewChannelModal = ({ closeModal }) => {
 					</Button>
 				</Form>
 			</Modal.Body>
-		</>
+		</ModalWrapper>
 	);
 };
 

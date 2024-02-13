@@ -1,45 +1,43 @@
 import { createReducer } from "@reduxjs/toolkit";
 import {
-	getAllGrpMsgs,
-	postGrpMsg,
-} from "../Thunks/GrpChatThunk.js";
+	getChats,
+	postChat
+} from "../Thunks/ChatThunk.js";
 
 const initialState = {
 	status: "idle", // loading: 'idle' | 'pending' | 'succeeded' | 'failed'
-	chatId: null, 
-	name:null,
-	creator:null,
-	admins:null,//[]
-	recipients: null,//[]
+	// chatId: null,
+	// Name: null,
+	// recipients: null, //[]
 	messages: null,
 	error: null,
 };
 
 const ChatReducer = createReducer(initialState, (builder) => {
 	builder
-		.addCase(getAllGrpMsgs.pending, (state, action) => {
+		.addCase(getChats.pending, (state, action) => {
 			state.status = "pending";
 			state.error = null;
 		})
-		.addCase(getAllGrpMsgs.fulfilled, (state, action) => {
+		.addCase(getChats.fulfilled, (state, action) => {
 			state.messages = action.payload?.messages;
 			state.status = "succeeded";
 			state.error = null;
 		})
-		.addCase(getAllGrpMsgs.rejected, (state, action) => {
+		.addCase(getChats.rejected, (state, action) => {
 			state.error = action.payload;
 			state.status = "failed";
 		})
-		.addCase(postGrpMsg.pending, (state, action) => {
+		.addCase(postChat.pending, (state, action) => {
 			state.status = "pending";
 			state.error = null;
 		})
-		.addCase(postGrpMsg.fulfilled, (state, action) => {
+		.addCase(postChat.fulfilled, (state, action) => {
 			state.messages = action.payload?.messages;
 			state.status = "succeeded";
 			state.error = null;
 		})
-		.addCase(postGrpMsg.rejected, (state, action) => {
+		.addCase(postChat.rejected, (state, action) => {
 			state.error = action.payload;
 			state.status = "failed";
 		});

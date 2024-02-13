@@ -83,7 +83,7 @@ export default function OTP({ onSubmitID }) {
 										</Form>
 										<div className='mt-3'>
 											<p className='mb-0  text-center'>
-												Don't have an account?{' '}
+												Don't have an account?
 												<a
 													href="{''}"
 													className='text-primary fw-bold'>

@@ -2,8 +2,13 @@
 // import { getAllGroups, createGroup } from "../Thunks/GroupContactThunk.js";
 
 // const initialState = {
-// 	status: "idle", // loading: 'idle' | 'pending' | 'succeeded' | 'failed'
-// 	groups: [],
+// status: "idle", // loading: 'idle' | 'pending' | 'succeeded' | 'failed'
+// 	chatId: null,
+// 	Name: null,
+// 	recipients: null, //[]
+// 	messages: null,
+// 	creator: null,
+// 	admins: null, //[]
 // 	error: null,
 // };
 

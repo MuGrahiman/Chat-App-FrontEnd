@@ -68,16 +68,21 @@ const SideBar = ({ openChat, activeKey, setActiveKey, Items }) => {
 				</Button>
 			</Tab.Container>
 
-			<Modal
+			{/* <Modal
 				show={modalOpen}
-				onHide={closeModal}>
+				onHide={closeModal}> */}
 				<Each
 					of={Items}
 					render={({ ItemKey, ModalComponent }) =>
-						ItemKey === activeKey && <ModalComponent closeModal={closeModal} />
+						ItemKey === activeKey && (
+							<ModalComponent
+								openModal={modalOpen}
+								closeModal={closeModal}
+							/>
+						)
 					}
 				/>
-			</Modal>
+			{/* </Modal> */}
 		</div>
 	);
 };

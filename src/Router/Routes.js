@@ -1,6 +1,6 @@
 import Register from "../Pages/Register";
-import Login from "../Components/Login";
-import Dashboard from "../Components/Dashboard";
+import Login from "../Pages/Login";
+import Dashboard from "../Pages/Dashboard";
 import OTP from "../Pages/Otp";
 
 const routes = [

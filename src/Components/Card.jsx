@@ -3,31 +3,44 @@ import Card from "react-bootstrap/Card";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleFollowStatus } from "../Store";
 
-function CardComponent({ _id, userName, profilePic, firstName, lastName }) {
-	const dispatch = useDispatch()
-	const user = useSelector((state) => state.user.currentUser);
-	const followings = useSelector((state) => state.userContacts.followings);
-
+function CardComponent({
+	id,
+	imgUrl,
+	imgWidth,
+	imgHeight,
+	imgClass,
+	title, //userName / chatName
+	subTitle, //private/group/channel
+	bio,
+	cardClass,
+	bodyClass,
+	footerClass,
+	footerFun, //function
+}) {
 	return (
-		<Card>
-			<Card.Header>{userName}</Card.Header>
-			<Card.Img
-				variant="top"
-				src={profilePic}
-			/>
-			<Card.Body>
-				<Card.Title>{firstName + " " + lastName}</Card.Title>
-				<Card.Text>
-					With supporting text below as a natural lead-in to additional content.
-				</Card.Text>
-				<Button
-					onClick={() => dispatch(toggleFollowStatus(_id))}
-					variant="primary">
-					{followings && followings.some((following) => following._id === _id)
-						? "un follow"
-						: "follow"}
-				</Button>
+		<Card className={`${cardClass}`}>
+			{imgUrl && (
+				<Card.Img
+					variant="bottom"
+					as={"img"}
+					style={{ width: imgWidth, height: imgHeight }}
+					className={` ${imgClass}`}
+					src={imgUrl}
+				/>
+			)}
+
+			<Card.Body className={`${bodyClass}`}>
+				{title && <Card.Title>{title}</Card.Title>}
+				{subTitle && (
+					<Card.Subtitle className="mb-2 text-muted">{subTitle}</Card.Subtitle>
+				)}
+				{bio && <Card.Text>{bio}</Card.Text>}
 			</Card.Body>
+				{footerFun &&
+			<Card.Footer className={`${footerClass}`}>
+				{ footerFun()}
+			</Card.Footer>
+				}
 		</Card>
 	);
 }

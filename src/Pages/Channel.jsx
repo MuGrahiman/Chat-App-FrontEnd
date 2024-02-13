@@ -5,7 +5,7 @@
 // import { getAllGroups } from '../Store';
 // import Each from './Each';
 
-const Groups = ({ openChat }) => {
+const Channel = ({ openChat }) => {
 // 	const dispatch = useDispatch()
 // 	const Groups = useSelector((state) => state.groupContacts.groups);
 // 	useEffect(()=>{
@@ -60,4 +60,4 @@ const Groups = ({ openChat }) => {
 	// );
 };
 
-export default Groups
+export default Channel;
