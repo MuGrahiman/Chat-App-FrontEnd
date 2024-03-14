@@ -5,7 +5,7 @@ import { toggleFollowStatus } from "../Thunks/PrivateThunk";
 
 const initialState = {
 	status: "idle", // loading: 'idle' | 'pending' | 'succeeded' | 'failed'
-	contactList: [],
+	chatList: [],
 	followingList: null,
 	followerList: null,
 	blockedList: null,
@@ -20,7 +20,7 @@ const ConnectionReducer = createReducer(initialState, (builder) => {
 		})
 		.addCase(getContacts.fulfilled, (state, action) => {
 			const { contacts, followings, followers } = action.payload;
-			state.contactList = contacts;
+			state.chatList = contacts;
 			state.followingList = followings;
 			state.followerList = followers;
 			state.status = "succeeded";
@@ -36,7 +36,7 @@ const ConnectionReducer = createReducer(initialState, (builder) => {
 		})
 		.addCase(toggleFollowStatus.fulfilled, (state, action) => {
 			const { contacts, followings, followers } = action.payload;
-			state.contactList = contacts;
+			state.chatList = contacts;
 			state.followingList = followings;
 			state.followerList = followers;
 			state.status = "succeeded";
@@ -52,7 +52,7 @@ const ConnectionReducer = createReducer(initialState, (builder) => {
 		})
 		.addCase(createGroup.fulfilled, (state, action) => {
 			const { contacts, followings, followers } = action.payload;
-			state.contactList = contacts;
+			state.chatList = contacts;
 			state.followingList = followings;
 			state.followerList = followers;
 			state.status = "succeeded";

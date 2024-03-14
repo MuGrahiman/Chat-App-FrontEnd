@@ -3,14 +3,14 @@ import { Form, InputGroup, ListGroup, Badge, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { MdPersonSearch } from "react-icons/md";
 import { toggleFollowStatus } from "../Store";
-import ModalWrapper from "../Components/Modal";
-import ListComponent from "../Components/ListComponent";
-import CardComponent from "../Components/Card";
+import ModalWrapper from "./Modal";
+import ListComponent from "./ListComponent";
+import CardComponent from "./Card";
 
 const NewConnectionModal = ({ closeModal, openModal }) => {
 	const dispatch = useDispatch();
 	const authData = useSelector((state) => state.auth.authData);
-	const followings = useSelector((state) => state.connection.followingList);
+	const followings = useSelector((state) => state.contacts.followingList);
 	const [userList, setUserList] = useState([]);
 
 	useEffect(() => {
@@ -33,10 +33,7 @@ const NewConnectionModal = ({ closeModal, openModal }) => {
 	const render = (item, index) =>
 		item ? (
 			<>
-				<ListGroup.Item
-					action
-					// active={conversations.selected}
-					className=" border-0  ">
+		
 					<CardComponent
 						cardClass={"flex-row"}
 						imgUrl={item?.profilePic}
@@ -56,7 +53,6 @@ const NewConnectionModal = ({ closeModal, openModal }) => {
 							</Badge>
 						)}
 					/>
-				</ListGroup.Item>
 			</>
 		) : null;
 

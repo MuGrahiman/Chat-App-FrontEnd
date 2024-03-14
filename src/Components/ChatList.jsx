@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Badge, Form, InputGroup, ListGroup } from "react-bootstrap";
 import { MdPersonSearch } from "react-icons/md";
 import { useSelector } from "react-redux";
-import CardComponent from "../Components/Card";
-import ListComponent from "../Components/ListComponent";
+import CardComponent from "./Card";
+import ListComponent from "./ListComponent";
 
-const Contacts = ({ openChat }) => {
-	const Chats = useSelector((state) => state.connection.contactList);
+const ChatList = ({ openChat }) => {
+	const Chats = useSelector((state) => state.contacts.chatList);
 	const user = useSelector((state) => state.user.currentUser);
 	const [chatList, setChatList] = useState([]);
 
@@ -44,11 +44,7 @@ const renderItems = (item, index) =>
 					chatImg = chat?.profilePic;
 				}
 				return (
-					<ListGroup.Item
-						action
-						onClick={() => openChat({ type: type.toLowerCase(), id: chatId })}
-						// active={chatId}
-						className=" border-0  p-0">
+				
 						<CardComponent
 							cardClass={"flex-row"}
 							imgUrl={chatImg}
@@ -67,7 +63,6 @@ const renderItems = (item, index) =>
 							)}
 							footerClass={" bg-transparent border-0 "}
 						/>
-					</ListGroup.Item>
 				);
 		  })()
 		: null;
@@ -96,4 +91,4 @@ const renderItems = (item, index) =>
 	);
 };
 
-export default Contacts;
+export default ChatList;

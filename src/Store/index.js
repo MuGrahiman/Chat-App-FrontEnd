@@ -11,7 +11,7 @@ export const store = configureStore({
 	reducer: {
 		user: userSlice.reducer,
 		auth: authReducer,
-		connection: ConnectionReducer,
+		contacts: ConnectionReducer,
 		private: PrivateReducer,
 		group: GroupReducer,
 		channel: ChannelReducer,

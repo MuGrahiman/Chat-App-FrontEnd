@@ -3,9 +3,9 @@ import { MdPersonSearch } from "react-icons/md";
 import { Form, InputGroup, ListGroup, Button, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { createGroup } from "../Store";
-import ModalWrapper from "../Components/Modal";
-import ListComponent from "../Components/ListComponent";
-import CardComponent from "../Components/Card";
+import ModalWrapper from "./Modal";
+import ListComponent from "./ListComponent";
+import CardComponent from "./Card";
 
 const NewGroupModal = ({ closeModal, openModal }) => {
 	const dispatch = useDispatch();
@@ -47,9 +47,7 @@ const NewGroupModal = ({ closeModal, openModal }) => {
 	const render = (item, index) =>
 		item ? (
 			<>
-				<ListGroup.Item
-					action
-					className=" border-0 ">
+			
 					<CardComponent
 						cardClass={"flex-row"}
 						imgUrl={item?.profilePic}
@@ -68,7 +66,6 @@ const NewGroupModal = ({ closeModal, openModal }) => {
 							/>
 						)}
 					/>
-				</ListGroup.Item>
 			</>
 		) : null;
 

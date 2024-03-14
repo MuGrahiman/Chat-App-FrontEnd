@@ -1,13 +1,11 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect,useState } from "react";
 import { Button, CloseButton, Form, InputGroup } from "react-bootstrap";
 import { IoMdMore, IoMdArrowDropleft } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { getChats, postChat } from "../Store";
-import Each from "./Each";
-import ProfileOffcanvas from "./ProfileOffcanvas";
 import ChatProfile from "./ChatProfile";
 
-const OpenConversation = ({ type, id, closeConversation }) => {
+const Chat = ({ type, id, closeConversation }) => {
 	useEffect(() => {
 		dispatch(
 			type === "private" ? getChats({ type, id }) : getChats({ type, id })
@@ -129,4 +127,4 @@ const OpenConversation = ({ type, id, closeConversation }) => {
 	);
 };
 
-export default OpenConversation;
+export default Chat;

@@ -6,9 +6,9 @@ function App() {
 	return (
 		<BrowserRouter>
 			<Routes>
-				<Route 
+				<Route
 					path="/"
-					element={<Navigate to={"/home"} />}
+					element={<Navigate to={"/dashboard"} />}
 				/>
 				<Route
 					path="/*"

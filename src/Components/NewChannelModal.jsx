@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { createChannel } from "../Store";
-import ModalWrapper from "../Components/Modal";
+import ModalWrapper from "./Modal";
 
 const NewChannelModal = ({ closeModal, openModal }) => {
 	const dispatch = useDispatch();

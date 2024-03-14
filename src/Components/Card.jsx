@@ -5,6 +5,7 @@ import { toggleFollowStatus } from "../Store";
 
 function CardComponent({
 	id,
+	style,
 	imgUrl,
 	imgWidth,
 	imgHeight,
@@ -18,7 +19,7 @@ function CardComponent({
 	footerFun, //function
 }) {
 	return (
-		<Card className={`${cardClass}`}>
+		<Card className={`${cardClass}`} style={style}>
 			{imgUrl && (
 				<Card.Img
 					variant="bottom"
