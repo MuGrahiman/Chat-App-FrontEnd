@@ -3,20 +3,25 @@ import { Form, InputGroup, ListGroup, Badge, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { MdPersonSearch } from "react-icons/md";
 import { toggleFollowStatus } from "../Store";
-import ModalWrapper from "../Components/Modal";
-import ListComponent from "../Components/ListComponent";
-import CardComponent from "../Components/Card";
+import ModalWrapper from "./Modal";
+import ListComponent from "./ListComponent";
+import CardComponent from "./Card";
+import { Link } from "react-router-dom";
 
 const NewConnectionModal = ({ closeModal, openModal }) => {
 	const dispatch = useDispatch();
 	const authData = useSelector((state) => state.auth.authData);
-	const followings = useSelector((state) => state.connection.followingList);
+	const followings = useSelector((state) => state.contacts.followingList);
 	const [userList, setUserList] = useState([]);
 
 	useEffect(() => {
-		const filteredUsers = authData.filter(
-			(user) => !followings.some((following) => following._id === user._id)
-		);
+		const filteredUsers =
+			authData &&
+			authData.filter((user) =>
+				followings
+					? !followings.some((following) => following._id === user._id)
+					: user
+			);
 		setUserList(filteredUsers);
 	}, [authData, followings]);
 	const handleSearch = (searchText) => {
@@ -30,35 +35,39 @@ const NewConnectionModal = ({ closeModal, openModal }) => {
 		setUserList(filteredData);
 	};
 
-	const render = (item, index) =>
-		item ? (
-			<>
-				<ListGroup.Item
-					action
-					// active={conversations.selected}
-					className=" border-0  ">
-					<CardComponent
-						cardClass={"flex-row"}
-						imgUrl={item?.profilePic}
-						imgHeight={"50px"}
-						imgWidth={"50px"}
-						imgClass={"border-0 rounded-pill  m-auto  img-thumbnail"}
-						bodyClass={"p-2"}
-						title={item?.userName}
-						subTitle={item.firstName + " " + item.lastName}
-						footerClass={"bg-transparent m-auto border-0"}
-						footerFun={() => (
-							<Badge onClick={() => dispatch(toggleFollowStatus(item._id))}>
-								{followings &&
-								followings.some((following) => following._id === item._id)
-									? "un follow"
-									: "follow"}
+	const render = (item) => {
+		const isFollowing = followings?.some((f) => f._id === item._id);
+		return item ? (
+			<CardComponent
+				cardClass={"flex-row "}
+				imgUrl={item?.profilePic}
+				imgClass={"border-0 rounded-pill  m-auto  img-thumbnail"}
+				imgHeight={"50px"}
+				imgWidth={"50px"}
+				bodyClass={"p-2"}
+				title={item?.userName}
+				subTitle={item?.firstName + " " + item?.lastName}
+				footerClass={"m-auto bg-transparent border-0 "}
+				footerFun={() => (
+					<div className="d-grid gap-2">
+							<Badge
+								className={`w-100 bg-${isFollowing ? "danger" : "success"}`}
+								onClick={() => dispatch(toggleFollowStatus(item._id))}>
+								{isFollowing ? "un follow" : "follow"}
 							</Badge>
-						)}
-					/>
-				</ListGroup.Item>
-			</>
+
+						<Link to={`profile/${item._id}`}>
+							<Badge
+								className="w-100"
+								onClick={closeModal}>
+								View
+							</Badge>
+						</Link>
+					</div>
+				)}
+			/>
 		) : null;
+	};
 
 	return (
 		<ModalWrapper

@@ -3,13 +3,14 @@ import { MdPersonSearch } from "react-icons/md";
 import { Badge, Form, InputGroup, ListGroup } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleFollowStatus } from "../Store";
-import ListComponent from "../Components/ListComponent";
-import CardComponent from '../Components/Card';
+import ListComponent from "./ListComponent";
+import CardComponent from './Card';
+import { Link } from 'react-router-dom';
 
-const Connections = ({ openChat }) => {
+const ConnectionList = ({ openChat }) => {
 	const dispatch = useDispatch();
 	const authData = useSelector((state) => state.auth.authData);
-	const followings = useSelector((state) => state.connection.followingList);
+	const followings = useSelector((state) => state.contacts.followingList);
 	const [userList, setUserList] = useState([]);
 
 	useEffect(() => {
@@ -32,11 +33,8 @@ const Connections = ({ openChat }) => {
 	};
 	const RenderItems = (item) => { 
 		return item ? (
-			<>
-				<ListGroup.Item
-					action
-					// active={conversations.selected}
-					className=" border-0  p-0">
+			<Link to={`profile/${item._id}`}>
+		
 					<CardComponent
 						cardClass={"flex-row "}
 						imgUrl={item?.profilePic}
@@ -56,8 +54,7 @@ const Connections = ({ openChat }) => {
 							</Badge>
 						)}
 					/>
-				</ListGroup.Item>
-			</>
+			</Link>
 		) : null;
 	};	
 	return (
@@ -83,5 +80,5 @@ const Connections = ({ openChat }) => {
 
 };
 
-export default Connections;
+export default ConnectionList;
 

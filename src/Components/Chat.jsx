@@ -1,21 +1,19 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Button, CloseButton, Form, InputGroup } from "react-bootstrap";
 import { IoMdMore, IoMdArrowDropleft } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { getChats, postChat } from "../Store";
-import Each from "./Each";
-import ProfileOffcanvas from "./ProfileOffcanvas";
 import ChatProfile from "./ChatProfile";
+import { useParams } from "react-router-dom";
 
-const OpenConversation = ({ type, id, closeConversation }) => {
+const Chat = ({ type, id, closeConversation }) => {
+	const { chatId } = useParams();
 	useEffect(() => {
-		dispatch(
-			type === "private" ? getChats({ type, id }) : getChats({ type, id })
-		);
+		dispatch(getChats({ type: "private", id: chatId }));
 	}, []);
 
-	const Message = useSelector((state) => state.chat.messages);
 	const user = useSelector((state) => state.user.currentUser);
+	const Message = useSelector((state) => state.chat.messages);
 	const [text, setText] = useState("");
 	const [modal, setModal] = useState(false);
 	const [showProfile, setShowProfile] = useState(false);
@@ -129,4 +127,4 @@ const OpenConversation = ({ type, id, closeConversation }) => {
 	);
 };
 
-export default OpenConversation;
+export default Chat;

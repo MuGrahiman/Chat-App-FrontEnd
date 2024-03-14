@@ -6,16 +6,18 @@ import GroupReducer from "./Reducers/GroupReducer";
 import ChannelReducer from "./Reducers/ChannelReducer";
 import PrivateReducer from "./Reducers/PrivateReducer";
 import ChatReducer from "./Reducers/ChatReducer";
+import ProfileReducer from './Reducers/ProfileReducer';
 
 export const store = configureStore({
 	reducer: {
 		user: userSlice.reducer,
 		auth: authReducer,
-		connection: ConnectionReducer,
+		contacts: ConnectionReducer,
 		private: PrivateReducer,
 		group: GroupReducer,
 		channel: ChannelReducer,
 		chat: ChatReducer,
+		profile:ProfileReducer
 	},
 });
 

@@ -5,9 +5,11 @@ import { toggleFollowStatus } from "../Thunks/PrivateThunk";
 
 const initialState = {
 	status: "idle", // loading: 'idle' | 'pending' | 'succeeded' | 'failed'
-	contactList: [],
+	chatList: null,
 	followingList: null,
 	followerList: null,
+	groupList: null,
+	subscribedList: null,
 	blockedList: null,
 	error: null,
 };
@@ -19,10 +21,18 @@ const ConnectionReducer = createReducer(initialState, (builder) => {
 			state.error = null;
 		})
 		.addCase(getContacts.fulfilled, (state, action) => {
-			const { contacts, followings, followers } = action.payload;
-			state.contactList = contacts;
-			state.followingList = followings;
-			state.followerList = followers;
+			const {
+				chatList,
+				followingList,
+				followerList,
+				groupList,
+				subscribedList,
+				blockedList,
+			} = action.payload;
+			state.chatList = chatList;
+			state.followingList = followingList;
+			state.followerList = followerList;
+			state.blockedList = blockedList;
 			state.status = "succeeded";
 			state.error = null;
 		})
@@ -35,10 +45,17 @@ const ConnectionReducer = createReducer(initialState, (builder) => {
 			state.error = null;
 		})
 		.addCase(toggleFollowStatus.fulfilled, (state, action) => {
-			const { contacts, followings, followers } = action.payload;
-			state.contactList = contacts;
-			state.followingList = followings;
-			state.followerList = followers;
+			const {
+				chatList,
+				followingList,
+				followerList,
+				groupList,
+				subscribedList,
+				blockedList,
+			} = action.payload;
+			state.chatList = chatList;
+			state.followingList = followingList;
+			state.followerList = followerList;
 			state.status = "succeeded";
 			state.error = null;
 		})
@@ -51,10 +68,17 @@ const ConnectionReducer = createReducer(initialState, (builder) => {
 			state.error = null;
 		})
 		.addCase(createGroup.fulfilled, (state, action) => {
-			const { contacts, followings, followers } = action.payload;
-			state.contactList = contacts;
-			state.followingList = followings;
-			state.followerList = followers;
+			const {
+				chatList,
+				followingList,
+				followerList,
+				groupList,
+				subscribedList,
+				blockedList,
+			} = action.payload;
+			state.chatList = chatList;
+			state.followingList = followingList;
+			state.followerList = followerList;
 			state.status = "succeeded";
 			state.error = null;
 		})

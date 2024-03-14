@@ -2,11 +2,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import * as Api from "./API";
 
 export const getContacts = createAsyncThunk(
-	"contact/user/get",
+	"get/user/contact",
 	async (authData, thunkApi) => {
-		console.log("response");
-		console.log(authData);
-
 		try {
 			const response = await Api.getAllUserContacts(authData);
 			return response.data;
@@ -15,10 +12,27 @@ export const getContacts = createAsyncThunk(
 				error?.response?.data?.message ||
 					error?.response?.message ||
 					error?.message ||
-					"something went wrong" 
+					"something went wrong"
 			);
-		} 
+		}
 	}
 );
 
+export const checkConnection = createAsyncThunk(
+	"check/user/contact",
+	async (id, thunkApi) => {
+		const response = await Api.checkConnection(id);
 
+		return response.data;
+	}
+);
+
+export const createConnection = createAsyncThunk(
+	"add/user/contact",
+	async (id, thunkApi) => {
+		const response = await Api.createConnection(id);
+
+		console.log("🚀 createConnection~ response:", response);
+		return response.data;
+	}
+);

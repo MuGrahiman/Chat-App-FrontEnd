@@ -7,10 +7,18 @@ const ListComponent = ({Contents ,Customize ,Class}) => {
 		<ListGroup
 			variant="flush"
 			className={`${Class}`}>
-			<Each
-				of={Contents}
-				render={(data)=>Customize(data)}
-			/>
+			{Contents && (
+				<Each
+					of={Contents}
+					render={(data) => (
+						<ListGroup.Item
+							action
+							className=" border-0">
+							{Customize(data)}
+						</ListGroup.Item>
+					)}
+				/>
+			)}
 		</ListGroup>
 	);
 }

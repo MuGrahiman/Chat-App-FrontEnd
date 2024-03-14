@@ -1,35 +1,36 @@
 import React, { useEffect, useState } from "react";
-import Chat from "./Chat";
-import Blog from "../Components/Blog";
-import OpenConversation from "../Components/OpenConversation";
-
+import Chat from "../Components/Chat";
+import { Outlet } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getAllUsers, getContacts } from "../Store";
 import SideBar from "../Components/SideBar";
-import Conversations from "./Contacts";
-import NewGroupModal from "./NewGroupModal";
-import NewConnectionModal from "./NewConnectionModal";
-import NewChannelModal from "./NewChannelModal";
-import Channel from "./Channel";
-import Contacts from "./Connections";
+import ChannelList from "../Components/ChannelList";
+import ConnectionList from "../Components/ConnectionList";
+import ChatList from "../Components/ChatList";
+import NewGroupModal from "../Components/NewGroupModal";
+import NewConnectionModal from "../Components/NewConnectionModal";
+import NewChannelModal from "../Components/NewChannelModal";
 
 const CHATS_KEY = "Chats";
 const CHANNEL_KEY = "Channels";
 const CONNECTION_KEY = "Connections";
 const Items = [
 	{
-		ItemKey: CHATS_KEY,
-		Component: Conversations,
+		EventKey: CHATS_KEY,
+		ItemKey: () => <>{CHATS_KEY}</>, 
+		Component: ChatList,
 		ModalComponent: NewGroupModal,
 	},
 	{
-		ItemKey: CHANNEL_KEY,
-		Component: Channel,
+		EventKey: CHANNEL_KEY,
+		ItemKey: () => <>{CHANNEL_KEY} </>,
+		Component: ChannelList,
 		ModalComponent: NewChannelModal,
 	},
 	{
-		ItemKey: CONNECTION_KEY,
-		Component: Contacts,
+		EventKey: CONNECTION_KEY,
+		ItemKey: () => <>{CONNECTION_KEY} </>,
+		Component: ConnectionList,
 		ModalComponent: NewConnectionModal,
 	},
 ];
@@ -55,14 +56,31 @@ const Dashboard = ({ id }) => {
 			{/* <Chat
 				openConversation={openConversation}
 				setOpenConversation={setOpenConversation}
+				 
 			/> */}
+			<Outlet />
+			{/* <Routes>
+				<Route
+					path="/chat"
+					element={<OpenConversation />}
+				/>
+				<Route
+					path="/profile/:id"
+					element={<OpenConversation />}
+				/>
+				<Route
+					// exact
+					path="/chat"
+					element={<OpenConversation />}
+				/>
+			</Routes> */}
+
 			{openConversation && (
-				<OpenConversation
+				<Chat
 					{...openConversation}
 					closeConversation={() => setOpenConversation(null)}
 				/>
 			)}
-			{/* <Blog /> */}
 		</div>
 	);
 };

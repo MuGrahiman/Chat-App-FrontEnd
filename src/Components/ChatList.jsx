@@ -2,18 +2,19 @@ import React, { useEffect, useState } from "react";
 import { Badge, Form, InputGroup, ListGroup } from "react-bootstrap";
 import { MdPersonSearch } from "react-icons/md";
 import { useSelector } from "react-redux";
-import CardComponent from "../Components/Card";
-import ListComponent from "../Components/ListComponent";
+import CardComponent from "./Card";
+import ListComponent from "./ListComponent";
+import { Link } from "react-router-dom";
 
-const Contacts = ({ openChat }) => {
-	const Chats = useSelector((state) => state.connection.contactList);
+const ChatList = ({ activeKey, setActiveKey }) => {
+	const Chats = useSelector((state) => state.contacts.chatList);
 	const user = useSelector((state) => state.user.currentUser);
 	const [chatList, setChatList] = useState([]);
 
-	useEffect(() => {
+	useEffect(() => { 
 		setChatList(Chats);
 	}, [Chats]);
-
+console.log(chatList)
 	const handleSearch = (searchText) => {
 		const text = searchText.trim().toLowerCase();
 		const filteredData = Chats.filter((chat) => {
@@ -26,9 +27,9 @@ const Contacts = ({ openChat }) => {
 
 		setChatList(filteredData);
 	};
-const renderItems = (item, index) =>
-	item
-		? (() => {
+	const renderItems = (item, index) =>
+		item && (
+			(() => {
 				const { type, chat } = item;
 				let chatName, chatId, chatImg;
 				const recipient =
@@ -44,34 +45,28 @@ const renderItems = (item, index) =>
 					chatImg = chat?.profilePic;
 				}
 				return (
-					<ListGroup.Item
-						action
-						onClick={() => openChat({ type: type.toLowerCase(), id: chatId })}
-						// active={chatId}
-						className=" border-0  p-0">
-						<CardComponent
-							cardClass={"flex-row"}
-							imgUrl={chatImg}
-							imgHeight={"50px"}
-							imgWidth={"50px"}
-							imgClass={"border-0 rounded-pill  m-auto  img-thumbnail"}
-							bodyClass={"p-2"}
-							title={chatName}
-							subTitle={type}
-							footerFun={() => (
-								<Badge
-									bg="primary"
-									pill>
-									14
-								</Badge>
-							)}
-							footerClass={" bg-transparent border-0 "}
-						/>
-					</ListGroup.Item>
+					<CardComponent
+						cardClass={"flex-row"}
+						imgUrl={chatImg}
+						imgHeight={"50px"}
+						imgWidth={"50px"}
+						imgClass={"border-0 rounded-pill  m-auto  img-thumbnail"}
+						bodyClass={"p-2"}
+						title={chatName}
+						subTitle={type}
+						footerFun={() => (
+							<Badge
+								bg="primary"
+								pill>
+								14
+							</Badge>
+						)}
+						footerClass={" bg-transparent border-0 "}
+					/>
 				);
-		  })()
-		: null;
-
+			})()
+		)  
+	
 	return (
 		<>
 			<InputGroup className="mb-3 rounded-pill border">
@@ -84,16 +79,27 @@ const renderItems = (item, index) =>
 					<MdPersonSearch />
 				</InputGroup.Text>
 			</InputGroup>
-
-			<ListComponent
-				variant="flush"
-				Class="gap-1 p-2"
-				Contents={chatList}
-				Customize={renderItems}
-			/>
+			{chatList&&chatList.length ? (
+				<ListComponent
+					variant="flush"
+					Class="gap-1 p-2"
+					Contents={chatList}
+					Customize={renderItems}
+				/>
+			) : (
+				<div className="text-center">
+					<p>
+						don`t have any connection yet .<br />
+						<b>
+							<Link onClick={() => setActiveKey("Connections")}>
+								make new connection
+							</Link>
+						</b>
+					</p>
+				</div>
+			)}
 		</>
-
 	);
 };
 
-export default Contacts;
+export default ChatList;

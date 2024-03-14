@@ -16,8 +16,9 @@ export const userPostOTP = ({ id, data }) =>
 	API.post(`/otp/${id}`, { otp: data });
 export const userResendOtp = (id) => API.get(`/otp/${id}`);
 export const userLogin = (data) => API.post("user/Login", data);
-export const getAllUsers = () => API.get("user/get");
-
+export const getAllUsers = () => API.get("user/get/all");
+export const getUser = (id) => API.get(`user/get/${id}`);
+ 
 export const getAllUserContacts = () => API.get("contact/user");
 export const toggleFollowStatus = (id) => API.patch(`contact/user`,id);
 export const deleteChat = (id) => API.delete(`contact/user`, id);
@@ -30,3 +31,6 @@ export const createChannel = (data) => API.post("contact/channel", data);
 export const getChats = ({ type, id }) => API.get(`chat/${type}/${id}`);
 export const postChat = ({ type, id, text }) =>
 	API.post(`chat/${type}/${id}`, {text});
+	
+export const checkConnection = (id) => API.get(`contact/connection/${id}`);
+export const createConnection = (id) => API.post(`contact/connection/${id}`);

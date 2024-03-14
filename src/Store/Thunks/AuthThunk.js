@@ -5,8 +5,6 @@ import { addUser } from '..';
 export const userRegister = createAsyncThunk(
 	'auth/register',
 	async (authData, thunkApi) => {
-		console.log('response');
-		console.log(authData);
 
 		try {
 			const response = await Api.userRegister(authData);
@@ -32,7 +30,6 @@ export const userPostOTP = createAsyncThunk(
 	async (authData, thunkApi) => {
 		try {
 			const response = await Api.userPostOTP(authData);
-			console.log(response);
 			return response.data;
 		} catch (error) {
 			return thunkApi.rejectWithValue(
@@ -50,7 +47,6 @@ export const userLogin = createAsyncThunk(
 	async (authData, thunkApi) => {
 		try {
 			const response = await Api.userLogin(authData);
-			console.log(response);
 		
 			return thunkApi.dispatch(addUser(response.data));
 		} catch (error) {
@@ -64,7 +60,12 @@ export const userLogin = createAsyncThunk(
 	}
 );
 
-export const getAllUsers = createAsyncThunk("auth/user", async () => {
+export const getAllUsers = createAsyncThunk("auth/user/all", async () => {
 	const response = await Api.getAllUsers();
+	return response.data;
+});
+
+export const getUser = createAsyncThunk("auth/user", async (id) => {
+	const response = await Api.getUser(id);
 	return response.data;
 });

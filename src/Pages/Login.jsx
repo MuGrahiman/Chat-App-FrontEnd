@@ -20,7 +20,7 @@ export default function Login({ onSubmitID }) {
 			typeof user === "object" &&
 			Object.keys(user).length > 0
 		) {
-			navigate("/home");
+			navigate("/dashboard");
 		}
 	}, [user]);
 
