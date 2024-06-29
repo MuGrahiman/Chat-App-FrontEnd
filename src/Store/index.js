@@ -23,6 +23,7 @@ export const store = configureStore({
 	},
 });
 
+export * from "./Actions/Actions";
 export * from "./Thunks/AuthThunk";
 export * from "./Thunks/ConnectionThunk";
 export * from "./Thunks/ChannelThunk";

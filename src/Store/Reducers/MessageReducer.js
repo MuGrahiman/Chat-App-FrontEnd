@@ -1,5 +1,6 @@
 import { createAction, createReducer } from "@reduxjs/toolkit";
 import { getAllMessages, postMessage } from "../Thunks/MessageThunk.js";
+import { resetMessage } from "../Actions/Actions.js";
 
 const initialState = {
 	status: "idle", // loading: 'idle' | 'pending' | 'succeeded' | 'failed'
@@ -7,7 +8,6 @@ const initialState = {
 	error: null,
 };
 
- export const resetMessage = createAction("message/resetMessage");
 
 const MessageReducer = createReducer(initialState, (builder) => {
 	builder

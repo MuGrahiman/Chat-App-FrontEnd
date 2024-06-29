@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { userLogin } from "../Store";
+import { resetAuth, userLogin } from "../Store";
 
 export default function Login({ onSubmitID }) {
 	const dispatch = useDispatch();
@@ -14,14 +14,14 @@ export default function Login({ onSubmitID }) {
 	});
 
 	useEffect(() => {
-	
+		dispatch(resetAuth()); // Reset chat state before fetching new data
+
 		if (
 			user !== null &&
 			typeof user === "object" &&
 			Object.keys(user).length > 0
-		) {
+		)
 			navigate("/dashboard");
-		}
 	}, [user]);
 
 	const handleSubmit = (e) => {

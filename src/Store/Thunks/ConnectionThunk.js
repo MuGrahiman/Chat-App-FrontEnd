@@ -31,8 +31,7 @@ export const createConnection = createAsyncThunk(
 	"add/user/contact",
 	async (id, thunkApi) => {
 		const response = await Api.createConnection(id);
-
-		console.log("🚀 createConnection~ response:", response);
+		thunkApi.dispatch(getContacts());
 		return response.data;
 	}
 );

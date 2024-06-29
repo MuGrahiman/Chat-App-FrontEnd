@@ -14,7 +14,6 @@ const ChatList = ({ activeKey, setActiveKey }) => {
 	useEffect(() => { 
 		setChatList(Chats);
 	}, [Chats]);
-console.log(chatList)
 	const handleSearch = (searchText) => {
 		const text = searchText.trim().toLowerCase();
 		const filteredData = Chats.filter((chat) => {
@@ -34,7 +33,6 @@ console.log(chatList)
 				let chatName, chatId, chatImg;
 				const recipient =
 					chat && chat?.participants?.filter((r) => r._id !== user.id);
-				console.log(recipient);
 				if (type === "Private") {
 					chatId = recipient?.map((r) => r._id);
 					chatName = recipient?.map((r) => r.userName);

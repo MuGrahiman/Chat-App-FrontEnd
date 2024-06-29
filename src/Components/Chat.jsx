@@ -2,10 +2,9 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Button, CloseButton, Form, InputGroup } from "react-bootstrap";
 import { IoMdMore, IoMdArrowDropleft } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
-import { getChat, getAllMessages } from "../Store";
+import { getChat, getAllMessages, resetMessage } from "../Store";
 import ChatProfile from "./ChatProfile";
 import { useParams } from "react-router-dom";
-import { resetMessage } from "../Store/Reducers/MessageReducer";
 import Loader from "./Loader";
 import MessageBox from "./MessageBox";
 

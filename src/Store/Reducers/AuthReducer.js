@@ -1,5 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { getAllUsers, userPostOTP, userRegister, userResendOtp } from '../Thunks/AuthThunk';
+import { resetAuth } from '../Actions/Actions';
 
 const initialState = {
 	status: 'idle', // loading: 'idle' | 'pending' | 'succeeded' | 'failed'
@@ -60,7 +61,9 @@ const authReducer = createReducer(initialState, (builder) => {
 		.addCase(getAllUsers.rejected, (state, action) => {
 			state.error = action.payload;
 			state.status = "failed";
-		});
+		})
+		.addCase(resetAuth, (state) => Object.assign(state, initialState));
+		;
 });
 
 export default authReducer;
