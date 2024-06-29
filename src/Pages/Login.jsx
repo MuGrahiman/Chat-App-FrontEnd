@@ -10,7 +10,7 @@ export default function Login({ onSubmitID }) {
 	const user = useSelector((state) => state.user.currentUser);
 	const [userData, setUserData] = useState({
 		email: "",
-		password: "",
+		password: "", 
 	});
 
 	useEffect(() => {
