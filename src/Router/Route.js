@@ -22,6 +22,7 @@ const routes = [
 		protect: true,
 		children: [
 			{ path: "chat/:chatId", element: <Chat />, protect: true },
+			{ path: "chat/:chatType/:chatId", element: <Chat />, protect: true },
 			{ path: "channel/:channelId", element: <Chat />, protect: true },
 			{ path: "profile/:userId", element: <Profile />, protect: true },
 		],

@@ -1,40 +1,43 @@
-import { createReducer } from "@reduxjs/toolkit";
-import { getChats, postChat } from "../Thunks/ChatThunk.js";
+import { createAction, createReducer } from "@reduxjs/toolkit";
+import { getAllMessages, postMessage } from "../Thunks/MessageThunk.js";
 
 const initialState = {
 	status: "idle", // loading: 'idle' | 'pending' | 'succeeded' | 'failed'
-	messages: null,
+	messages: null,//[]
 	error: null,
 };
 
+ export const resetMessage = createAction("message/resetMessage");
+
 const MessageReducer = createReducer(initialState, (builder) => {
 	builder
-		.addCase(getChats.pending, (state, action) => {
+		.addCase(getAllMessages.pending, (state, action) => {
 			state.status = "pending";
 			state.error = null;
 		})
-		.addCase(getChats.fulfilled, (state, action) => {
+		.addCase(getAllMessages.fulfilled, (state, action) => {
 			state.messages = action.payload?.messages;
 			state.status = "succeeded";
 			state.error = null;
 		})
-		.addCase(getChats.rejected, (state, action) => {
+		.addCase(getAllMessages.rejected, (state, action) => {
 			state.error = action.payload;
 			state.status = "failed";
 		})
-		.addCase(postChat.pending, (state, action) => {
+		.addCase(postMessage.pending, (state, action) => {
 			state.status = "pending";
 			state.error = null;
 		})
-		.addCase(postChat.fulfilled, (state, action) => {
+		.addCase(postMessage.fulfilled, (state, action) => {
 			state.messages = action.payload?.messages;
 			state.status = "succeeded";
 			state.error = null;
 		})
-		.addCase(postChat.rejected, (state, action) => {
+		.addCase(postMessage.rejected, (state, action) => {
 			state.error = action.payload;
 			state.status = "failed";
-		});
+		})
+		.addCase(resetMessage, (state) => Object.assign(state, initialState));
 });
 
 export default MessageReducer;

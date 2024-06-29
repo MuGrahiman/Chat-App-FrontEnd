@@ -28,9 +28,12 @@ export const createChannel = (data) => API.post("contact/channel", data);
 // export const getAllGroups = () => API.get("contact/channel");
 // export const joinGroup = (id) => API.patch(`contact/channel`, id);
 
-export const getChats = ({ type, id }) => API.get(`chat/${type}/${id}`);
+export const getChat = ({ chatType, chatId }) => API.get(`chat/${chatType}/${chatId}`);
 export const postChat = ({ type, id, text }) =>
 	API.post(`chat/${type}/${id}`, {text});
-	
+
+export const getAllMessages = (msgId) => API.get(`chat/msg/${msgId}`);
+export const postMessage = (msgId) => API.post(`chat/msg/${msgId}`);
+
 export const checkConnection = (id) => API.get(`contact/connection/${id}`);
 export const createConnection = (id) => API.post(`contact/connection/${id}`);

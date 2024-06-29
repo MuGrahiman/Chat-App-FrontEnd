@@ -43,7 +43,7 @@ const Profile = () => {
 		blockedList,
 	} = profile;
 	const refreshPage = () => dispatch(getUser(userId));
-	const reRoute = (chatId) => navigate(`/dashboard/chat/${chatId}`);
+	const reRoute = (chatId) => navigate(`/dashboard/chat/private/${chatId}`);
 	const dispatcher = (func, ...args) => {
 		dispatch(func(...args))
 			.then((res) => {
