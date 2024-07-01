@@ -43,24 +43,26 @@ const ChatList = ({ activeKey, setActiveKey }) => {
 					chatImg = chat?.profilePic;
 				}
 				return (
-					<CardComponent
-						cardClass={"flex-row"}
-						imgUrl={chatImg}
-						imgHeight={"50px"}
-						imgWidth={"50px"}
-						imgClass={"border-0 rounded-pill  m-auto  img-thumbnail"}
-						bodyClass={"p-2"}
-						title={chatName}
-						subTitle={type}
-						footerFun={() => (
-							<Badge
-								bg="primary"
-								pill>
-								14
-							</Badge>
-						)}
-						footerClass={" bg-transparent border-0 "}
-					/>
+					<Link to={`/dashboard/chat/${type.toLowerCase()}/${chat?._id}`}>
+						<CardComponent
+							cardClass={"flex-row"}
+							imgUrl={chatImg}
+							imgHeight={"50px"}
+							imgWidth={"50px"}
+							imgClass={"border-0 rounded-pill  m-auto  img-thumbnail"}
+							bodyClass={"p-2"}
+							title={chatName}
+							subTitle={type}
+							footerFun={() => (
+								<Badge
+									bg="primary"
+									pill>
+									14
+								</Badge>
+							)}
+							footerClass={" bg-transparent border-0 "}
+						/>
+					</Link>
 				);
 			})()
 		)  

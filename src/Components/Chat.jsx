@@ -29,7 +29,9 @@ const Chat = ({ type, id, closeConversation }) => {
 
 				dispatch(getAllMessages(result.payload.chat));
 			})
-			.catch((err) => console.error(err));
+			.catch((err) => {
+			    console.log("🚀 ~ useEffect ~ err:", err);
+			});
 	}, []);
 
 	const handleToggle = () => {
