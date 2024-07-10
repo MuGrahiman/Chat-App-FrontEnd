@@ -3,11 +3,11 @@ import {
 	getChat,
 	// postChat
 } from "../Thunks/ChatThunk.js";
+import { resetChat } from "../Actions/Actions.js";
 
 const initialState = {
 	status: "idle", // loading: 'idle' | 'pending' | 'succeeded' | 'failed'
-	chat: null,
-	// Name: null,
+	chatDetails: null,//{}
 	error: null,
 };
 
@@ -18,7 +18,7 @@ const ChatReducer = createReducer(initialState, (builder) => {
 			state.error = null;
 		})
 		.addCase(getChat.fulfilled, (state, action) => {
-			state.chat = action.payload;
+			state.chatDetails = action.payload;
 			state.status = "succeeded";
 			state.error = null;
 		})
@@ -26,19 +26,20 @@ const ChatReducer = createReducer(initialState, (builder) => {
 			state.error = action.payload;
 			state.status = "failed";
 		})
-		// .addCase(postChat.pending, (state, action) => {
-		// 	state.status = "pending";
-		// 	state.error = null;
-		// })
-		// .addCase(postChat.fulfilled, (state, action) => {
-		// 	state.messages = action.payload?.messages;
-		// 	state.status = "succeeded";
-		// 	state.error = null;
-		// })
-		// .addCase(postChat.rejected, (state, action) => {
-		// 	state.error = action.payload;
-		// 	state.status = "failed";
-		// });
+		.addCase(resetChat, (state) => Object.assign(state, initialState));
+	// .addCase(postChat.pending, (state, action) => {
+	// 	state.status = "pending";
+	// 	state.error = null;
+	// })
+	// .addCase(postChat.fulfilled, (state, action) => {
+	// 	state.messages = action.payload?.messages;
+	// 	state.status = "succeeded";
+	// 	state.error = null;
+	// })
+	// .addCase(postChat.rejected, (state, action) => {
+	// 	state.error = action.payload;
+	// 	state.status = "failed";
+	// });
 });
 
 export default ChatReducer;

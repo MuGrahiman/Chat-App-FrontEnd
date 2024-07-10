@@ -1,9 +1,11 @@
-import React, { useCallback } from "react";
-import { useSelector } from "react-redux";
+import React, { useCallback, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllMessages } from "../Store";
 
 const MessageBox = ({ Message }) => {
-    
-    const user = useSelector((state) => state.user.currentUser);
+
+
+	const user = useSelector((state) => state.user.currentUser);
 	const setRef = useCallback((node) => {
 		node && node.scrollIntoView({ behavior: "smooth" });
 	}, []);

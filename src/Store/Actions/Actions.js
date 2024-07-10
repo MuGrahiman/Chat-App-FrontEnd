@@ -1,5 +1,5 @@
 import { createAction } from "@reduxjs/toolkit";
 
-
 export const resetMessage = createAction("message/resetMessage");
- export const resetAuth = createAction("auth/resetAuth");
+export const resetChat = createAction("chat/resetChat");
+export const resetAuth = createAction("auth/resetAuth");

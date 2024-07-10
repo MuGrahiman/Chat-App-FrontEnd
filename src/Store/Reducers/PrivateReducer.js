@@ -1,5 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
-// import { getAllPvtMsgs, postPvtMsg } from "../Thunks/PrivateThunk.js";
+import { getAllPvtMsgs, postPvtMsg } from "../Thunks/PrivateThunk.js";
 
 const initialState = {
 	status: "idle", // loading: 'idle' | 'pending' | 'succeeded' | 'failed'
@@ -7,7 +7,7 @@ const initialState = {
 	recipients: null, //[]
 	error: null,
 };
-// get update block user details
+// get, block- user details
 const PrivateReducer = createReducer(initialState, (builder) => {
 	// builder
 	// 	.addCase(getAllPvtMsgs.pending, (state, action) => {
@@ -16,7 +16,6 @@ const PrivateReducer = createReducer(initialState, (builder) => {
 	// 	})
 	// 	.addCase(getAllPvtMsgs.fulfilled, (state, action) => {
 	// 		state.messages = action.payload?.messages;
-	// 		state.status = "succeeded";
 	// 		state.error = null;
 	// 	})
 	// 	.addCase(getAllPvtMsgs.rejected, (state, action) => {

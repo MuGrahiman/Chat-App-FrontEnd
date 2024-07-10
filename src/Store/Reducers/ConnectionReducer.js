@@ -1,7 +1,6 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { getContacts } from "../Thunks/ConnectionThunk";
+import { getContacts, toggleFollowStatus } from "../Thunks/ConnectionThunk";
 import { createGroup } from "../Thunks/GroupThunk";
-import { toggleFollowStatus } from "../Thunks/PrivateThunk";
 
 const initialState = {
 	status: "idle", // loading: 'idle' | 'pending' | 'succeeded' | 'failed'

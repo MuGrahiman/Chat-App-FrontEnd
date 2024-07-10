@@ -22,6 +22,23 @@ export const createGroup = createAsyncThunk(
 	}
 );
 
+export const getGroupChat = createAsyncThunk(
+	"chat/group/get",
+	async (authData, thunkApi) => {
+		try {
+			const response = await Api.getChat(authData);
+			return response.data;
+		} catch (error) {
+			return thunkApi.rejectWithValue(
+				error?.response?.data?.message ||
+					error?.response?.message ||
+					error?.message ||
+					"something went wrong"
+			);
+		}
+	}
+);
+
 export const removeGroup = createAsyncThunk(
 	"contact/group/remove",
 	async (id, thunkApi) => {

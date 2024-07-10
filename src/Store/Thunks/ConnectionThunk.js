@@ -18,6 +18,15 @@ export const getContacts = createAsyncThunk(
 	}
 );
 
+export const toggleFollowStatus = createAsyncThunk(
+	"contact/user/patch",
+	async (id, thunkApi) => {
+		const response = await Api.toggleFollowStatus({ id });
+		thunkApi.dispatch(getContacts());
+		return response.data;
+	}
+);
+
 export const checkConnection = createAsyncThunk(
 	"check/user/contact",
 	async (id, thunkApi) => {
